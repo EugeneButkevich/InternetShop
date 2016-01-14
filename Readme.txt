@@ -1,0 +1,1 @@
+Для подключения к Базе Данных необходимо в файле db.properties пакета by.htp.internetshop.dao.impl.connectionpool изменить значение "1234" на пароль установленной у Вас БД
