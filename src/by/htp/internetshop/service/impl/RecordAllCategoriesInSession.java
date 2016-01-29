@@ -21,8 +21,7 @@ public class RecordAllCategoriesInSession implements IService {
 	@Override
 	public boolean doService(HttpServletRequest request) {
 		List<ProductCategory> categoryList = null;
-		boolean result = false;
-		;
+		boolean result = true;
 
 		ProductDAO productDAO = DAOFactory.getInstance().getProductDAO();
 		try {
@@ -30,9 +29,7 @@ public class RecordAllCategoriesInSession implements IService {
 			request.getSession(true).setAttribute("allCategories", categoryList);
 		} catch (DAOException e) {
 			e.printStackTrace();
-		}
-		if (!categoryList.isEmpty()) {
-			result = true;
+			result = false;
 		}
 		return result;
 	}

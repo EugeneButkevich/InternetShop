@@ -6,13 +6,19 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Описание продукта</title>
+<title>Страница продукта</title>
 <fmt:setLocale value="${sessionScope.local}" />
 <fmt:setBundle basename="localization.local" var="loc" />
-<fmt:message bundle="${loc}" key="local.idNumber" var="idNumber" />
+<fmt:message bundle="${loc}" key="local.errorOrder1" var="errorOrder1" />
+<fmt:message bundle="${loc}" key="local.errorOrder2" var="errorOrder2" />
+<fmt:message bundle="${loc}" key="local.errorOrder3" var="errorOrder3" />
+<fmt:message bundle="${loc}" key="local.errorOrder4" var="errorOrder4" />
+<fmt:message bundle="${loc}" key="local.idNumberOfProduct" var="idNumberOfProduct" />
 <fmt:message bundle="${loc}" key="local.cost" var="cost" />
 <fmt:message bundle="${loc}" key="local.quantityMessage1" var="quantityMessage1" />
 <fmt:message bundle="${loc}" key="local.quantityMessage2" var="quantityMessage2" />
+<fmt:message bundle="${loc}" key="local.orderMessage" var="orderMessage" />
+<fmt:message bundle="${loc}" key="local.quantityMessage3" var="quantityMessage3" />
 </head>
 <body>
 	<jsp:include page="modules/header.jsp" />
@@ -21,9 +27,26 @@
 	<jsp:setProperty property="*" name="product" />
 
 	<h1><jsp:getProperty property="name" name="product" /></h1>
+	
+	<c:if test="${requestScope.errorOrder==1}">
+		<font color="#CC0000"> ${errorOrder1} </font>
+	</c:if>
+	
+	<c:if test="${requestScope.errorOrder==2}">
+		<font color="#CC0000"> ${errorOrder2} </font>
+	</c:if>
+	
+	<c:if test="${requestScope.errorOrder==3}">
+		<font color="#CC0000"> ${errorOrder3} </font>
+	</c:if>
+	
+	<c:if test="${requestScope.errorOrder==4}">
+		<font color="#CC0000"> ${errorOrder4} </font>
+	</c:if>
+	
 	<table>
 		<tr>
-			<td>${idNumber}:</td>
+			<td>${idNumberOfProduct}:</td>
 			<td><jsp:getProperty property="id" name="product" /></td>
 		</tr>
 		<tr>
@@ -32,22 +55,24 @@
 		</tr>
 		<tr>
 			<td>${quantityMessage1}:</td>
-			<%-- 	<c:if test=" ${requestScope.product != null}">
-					есть
-				</c:if>
-				<c:if test="product.quantityInStock == 0">
-					нет
-				</c:if> --%>
 			<td><jsp:getProperty property="quantityInStock" name="product" />
 				${quantityMessage2}.</td>
 		</tr>
+
+		<tr>
+			<td>
+				<c:if test="${sessionScope.client != null}">
+					<form action="controller" method="post">
+						<input type="hidden" name="command" value="order" /> 
+						<input type="hidden" name="id_client" value="${client.id}" /> 
+						<input type="hidden" name="id_product" value="${product.id}" />
+						${quantityMessage3}: 
+						<input type="text" name="number_of_instances" value="" size="1" /> 
+						<input type="submit" value="${orderMessage}" />
+					</form>
+				</c:if>
+			</td>
+		</tr>
 	</table>
-	<c:if test="${sessionScope.client != null}">
-		<form action="controller" method="post">
-			<input type="hidden" name="command" value="order" />
-			<input type="hidden" name="id_client" value="${client.id_client}" /> 
-			<input type="submit" value="Заказать" />
-		</form>
-	</c:if>
 </body>
 </html>

@@ -18,6 +18,7 @@ public class ShowInformationAboutProductCommand implements ICommand {
 		if (result) {
 			page = JspPageName.SINGLE_PRODUCT_PAGE;
 		}
+		System.out.println("page="+page);
 		return page;
 	}
 }

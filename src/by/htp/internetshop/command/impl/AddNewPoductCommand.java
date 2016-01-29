@@ -6,6 +6,7 @@ import by.htp.internetshop.command.CommandException;
 import by.htp.internetshop.command.ICommand;
 import by.htp.internetshop.controller.JspPageName;
 import by.htp.internetshop.service.impl.AddNewProductService;
+import by.htp.internetshop.service.impl.GoAddProductService;
 
 public class AddNewPoductCommand implements ICommand {
 
@@ -19,6 +20,7 @@ public class AddNewPoductCommand implements ICommand {
 		if (result) {
 			page = JspPageName.MAIN_PAGE;
 		} else {
+			GoAddProductService.getInstance().doService(request);
 			page = JspPageName.Add_NEW_PRODUCT_PAGE;
 		}
 		return page;

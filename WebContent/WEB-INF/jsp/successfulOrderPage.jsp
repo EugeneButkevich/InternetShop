@@ -11,11 +11,17 @@
 <fmt:setLocale value="${sessionScope.local}" />
 <fmt:setBundle basename="localization.local" var="loc" />
 <fmt:message bundle="${loc}" key="local.gratitudeForPurchase" var="gratitudeForPurchase" />
+<fmt:message bundle="${loc}" key="local.messageAboutReturn1" var="messageAboutReturn1" />
+<fmt:message bundle="${loc}" key="local.messageAboutReturn2" var="messageAboutReturn2" />
 </head>
 
 <jsp:include page="modules/header.jsp" />
 
-<font size="+4"><c:out value="${gratitudeForPurchase}" /></font>
+<font size="+3"><c:out value="${gratitudeForPurchase}" /></font>
+
+<p>
+	${messageAboutReturn1} <a href="index.jsp">${messageAboutReturn2}</a>
+</p>
 
 </body>
 </html>

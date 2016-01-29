@@ -18,9 +18,10 @@ public class GoAddProductService implements IService {
 		String idCategory = null;
 
 		idCategory = request.getParameter("id_category");
+		System.out.println("idCategory="+idCategory);
 
 		if (idCategory != null) {
-			request.getSession(true).setAttribute("id_category", idCategory);
+			request.setAttribute("id_category", idCategory);
 			result = true;
 		}
 		return result;

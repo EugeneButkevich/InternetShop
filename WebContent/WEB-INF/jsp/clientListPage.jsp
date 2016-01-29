@@ -30,12 +30,12 @@
 			</tr>
 			<c:forEach items="${sessionScope.clients}" var="client">
 				<tr>
-					<td><c:out value="${client.id_client}" /></td>
+					<td><c:out value="${client.id}" /></td>
 					<td><c:out value="${client.login}" /></td>
 					<td align="center">
 						<form action="controller" method="post">
 							<input type="hidden" name="command" value="add_to_blacklist" /> <input
-								type="hidden" name="id" value="${client.id_client}" /> <input
+								type="hidden" name="id" value="${client.id}" /> <input
 								type="submit" value="${addToBlacklist2}!" />
 						</form>
 					</td>

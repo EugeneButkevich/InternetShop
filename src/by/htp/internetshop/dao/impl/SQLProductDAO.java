@@ -21,6 +21,9 @@ public class SQLProductDAO implements ProductDAO {
 	private static final String GET_PRODUCT_SQL = "SELECT * FROM product WHERE id_product=?";
 	private static final String ADD_NEW_CATEGORY_PRODUCT_SQL = "INSERT INTO categoryproduct (name) VALUES (?)";
 	private static final String ADD_NEW_PRODUCT_SQL = "INSERT INTO product (id_category, name, price, quantityInStock) VALUES (?,?,?,?)";
+	private static final String EDIT_PRODUCT_SQL = "UPDATE product SET name=?, price=?, quantityInStock=? WHERE id_product=?";
+	private static final String REMOVE_PRODUCT_SQL = "DELETE FROM product WHERE id_product=?";
+	private static final String UPDATE_QUANTITY_OF_PRODUCTS_IN_STOCK_SQL = "UPDATE product SET quantityInStock=? WHERE id_product=?";
 
 	private static final SQLProductDAO instance = new SQLProductDAO();
 
@@ -192,13 +195,13 @@ public class SQLProductDAO implements ProductDAO {
 			connection = ConnectionPool.getInstance().takeConnection();
 			statement = connection.prepareStatement(ADD_NEW_PRODUCT_SQL);
 			statement.setInt(1, product.getIdCategory());
-			System.out.println("idCategory="+product.getIdCategory());
+			System.out.println("idCategory=" + product.getIdCategory());
 			statement.setString(2, product.getName());
-			System.out.println("name="+product.getName());
+			System.out.println("name=" + product.getName());
 			statement.setInt(3, product.getPrice());
-			System.out.println("cost="+product.getPrice());
+			System.out.println("cost=" + product.getPrice());
 			statement.setInt(4, product.getQuantityInStock());
-			System.out.println("quantity="+product.getQuantityInStock());
+			System.out.println("quantity=" + product.getQuantityInStock());
 			statement.executeUpdate();
 		} catch (ConnectionPoolException e) {
 			e.printStackTrace();
@@ -221,4 +224,97 @@ public class SQLProductDAO implements ProductDAO {
 		}
 	}
 
+	@Override
+	public void editProduct(Product product) throws DAOException {
+		Connection connection = null;
+		PreparedStatement statement = null;
+		try {
+			connection = ConnectionPool.getInstance().takeConnection();
+			statement = connection.prepareStatement(EDIT_PRODUCT_SQL);
+			statement.setString(1, product.getName());
+			statement.setInt(2, product.getPrice());
+			statement.setInt(3, product.getQuantityInStock());
+			statement.setInt(4, product.getId());
+			statement.executeUpdate();
+		} catch (ConnectionPoolException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					// logging ERROR
+				}
+			}
+			// return connection into connection pool
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	@Override
+	public void removeProduct(int idProduct) throws DAOException {
+		Connection connection = null;
+		PreparedStatement statement = null;
+		try {
+			connection = ConnectionPool.getInstance().takeConnection();
+			statement = connection.prepareStatement(REMOVE_PRODUCT_SQL);
+			statement.setInt(1, idProduct);
+			statement.executeUpdate();
+		} catch (ConnectionPoolException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					// logging ERROR
+				}
+			}
+			// return connection into connection pool
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	@Override
+	public void updateQuantityOfProductsInStock(Product product, int newValueOfQuantity) throws DAOException {
+		Connection connection = null;
+		PreparedStatement statement = null;
+		try {
+			connection = ConnectionPool.getInstance().takeConnection();
+			statement = connection.prepareStatement(UPDATE_QUANTITY_OF_PRODUCTS_IN_STOCK_SQL);
+			statement.setInt(1, newValueOfQuantity);
+			statement.setInt(2, product.getId());
+			statement.executeUpdate();
+		} catch (ConnectionPoolException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					// logging ERROR
+				}
+			}
+			// return connection into connection pool
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 }

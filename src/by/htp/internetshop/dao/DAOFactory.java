@@ -2,6 +2,7 @@ package by.htp.internetshop.dao;
 
 import by.htp.internetshop.dao.impl.SQLAdminDAO;
 import by.htp.internetshop.dao.impl.SQLClientDAO;
+import by.htp.internetshop.dao.impl.SQLOrderDAO;
 import by.htp.internetshop.dao.impl.SQLProductDAO;
 
 public class DAOFactory {
@@ -23,4 +24,7 @@ public class DAOFactory {
 		return SQLProductDAO.getInstance();
 	}
 	
+	public OrderDAO getOrderDAO(){
+		return SQLOrderDAO.getInstance();
+	}
 }

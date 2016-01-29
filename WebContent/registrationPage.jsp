@@ -14,6 +14,7 @@
 <fmt:message bundle="${loc}" key="local.errorMessageRegistration1" var="errorMessageRegistration1" />
 <fmt:message bundle="${loc}" key="local.errorMessageRegistration2" var="errorMessageRegistration2" />
 <fmt:message bundle="${loc}" key="local.errorMessageRegistration3" var="errorMessageRegistration3" />
+<fmt:message bundle="${loc}" key="local.errorMessageRegistration4" var="errorMessageRegistration4" />
 <fmt:message bundle="${loc}" key="local.signUp" var="signUp" />
 <fmt:message bundle="${loc}" key="local.login" var="login" />
 <fmt:message bundle="${loc}" key="local.password" var="password" />
@@ -33,21 +34,22 @@
 
 	<h1>${titleRegistration}</h1>
 
-	<c:if test="${sessionScope.errorRegistration==1}">
+	<c:if test="${requestScope.errorRegistration==1}">
 		<font color="#CC0000"> ${errorMessageRegistration1} </font>
-		<c:set var="errorRegistration" value="0" scope="session" />
 	</c:if>
 
-	<c:if test="${sessionScope.errorRegistration==2}">
+	<c:if test="${requestScope.errorRegistration==2}">
 		<font color="#CC0000"> ${errorMessageRegistration2} </font>
-		<c:set var="errorRegistration" value="0" scope="session" />
 	</c:if>
 
-	<c:if test="${sessionScope.errorRegistration==3}">
+	<c:if test="${requestScope.errorRegistration==3}">
 		<font color="#CC0000"> ${errorMessageRegistration3} </font>
-		<c:set var="errorRegistration" value="0" scope="session" />
 	</c:if>
 
+	<c:if test="${requestScope.errorRegistration==4}">
+		<font color="#CC0000"> ${errorMessageRegistration4} </font>
+	</c:if>
+	
 	<form action="controller" method="post">
 		<input type="hidden" name="command" value="registration" />
 		<table>

@@ -1,6 +1,8 @@
 package by.htp.internetshop.service.impl;
 
 import java.sql.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -44,13 +46,13 @@ public class RegistrationService implements IService {
 		ClientDAO clientDAO = DAOFactory.getInstance().getClientDAO();
 
 		if (!password.equals(passwordAgain)) {
-			request.getSession(true).setAttribute("errorRegistration", 1);
+			request.setAttribute("errorRegistration", 1);
 			result = false;
 		}
 
 		try {
 			if (!clientDAO.checkUniquenessOfLogin(login)) {
-				request.getSession(true).setAttribute("errorRegistration", 2);
+				request.setAttribute("errorRegistration", 2);
 				result = false;
 			}
 		} catch (DAOException e1) {
@@ -58,17 +60,20 @@ public class RegistrationService implements IService {
 		}
 
 		if ((login == "") || (password == "") || (surname == "") || (name == "") || (phone == "")) {
-			request.getSession(true).setAttribute("errorRegistration", 3);
+			request.setAttribute("errorRegistration", 3);
+			result = false;
+		}
+
+		Pattern p = Pattern.compile("[\\d\\s()\\-\\+]+");
+		Matcher matcher = p.matcher(phone);
+		if (!matcher.matches()) {
+			request.setAttribute("errorRegistration", 4);
 			result = false;
 		}
 
 		if (result) {
 			try {
 				clientDAO.registration(login, password, surname, name, registrationDate, phone, address, email);
-				/*
-				 * Client client = clientDAO.getClient(login, password);
-				 * request.getSession(true).setAttribute("client", client);
-				 */
 			} catch (DAOException e) {
 				e.printStackTrace();
 			}

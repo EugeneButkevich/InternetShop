@@ -10,9 +10,10 @@ import by.htp.internetshop.command.impl.AddNewPoductCommand;
 import by.htp.internetshop.command.impl.AddToBlacklistCommand;
 import by.htp.internetshop.command.impl.AuthorizationCommand;
 import by.htp.internetshop.command.impl.CancelTheOrderCommand;
-import by.htp.internetshop.command.impl.DeleteProductCommand;
+import by.htp.internetshop.command.impl.RemoveProductCommand;
 import by.htp.internetshop.command.impl.EditProductCommand;
 import by.htp.internetshop.command.impl.GoAddProductCommand;
+import by.htp.internetshop.command.impl.GoEditProductCommand;
 import by.htp.internetshop.command.impl.LanguageCommand;
 import by.htp.internetshop.command.impl.LogOutCommand;
 import by.htp.internetshop.command.impl.NoSuchCommand;
@@ -39,7 +40,7 @@ public final class ControllerHelper {
 		commands.put(CommandName.ADD_TO_BLACKLIST, new AddToBlacklistCommand());
 		commands.put(CommandName.REMOVE_FROM_BLACKLIST, new RemoveFromBlacklistCommand());
 		commands.put(CommandName.EDIT_PRODUCT, new EditProductCommand());
-		commands.put(CommandName.DELETE_PRODUCT, new DeleteProductCommand());
+		commands.put(CommandName.REMOVE_PRODUCT, new RemoveProductCommand());
 		commands.put(CommandName.CANCEL_THE_ORDER, new CancelTheOrderCommand());
 		commands.put(CommandName.LOG_OUT, new LogOutCommand());
 		commands.put(CommandName.CHOOSE_LANGUAGE, new LanguageCommand());
@@ -48,6 +49,7 @@ public final class ControllerHelper {
 		commands.put(CommandName.SHOW_INFORMATION_ABOUT_PRODUCT, new ShowInformationAboutProductCommand());
 		commands.put(CommandName.SHOW_PRODUCTS, new ShowProductsCommand());
 		commands.put(CommandName.GO_ADD_PRODUCT, new GoAddProductCommand());
+		commands.put(CommandName.GO_EDIT_PRODUCT, new GoEditProductCommand());
 		commands.put(CommandName.NO_SUCH_COMMAND, new NoSuchCommand());
 		System.out.println("Инициализировали controllerHelper");
 	}

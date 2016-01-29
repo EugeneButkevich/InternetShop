@@ -8,26 +8,23 @@ import by.htp.internetshop.dao.ProductDAO;
 import by.htp.internetshop.domain.Product;
 import by.htp.internetshop.service.IService;
 
-public class ShowInformationAboutProductService implements IService {
+public class GoEditProductService implements IService {
 
-	private final static ShowInformationAboutProductService instance = new ShowInformationAboutProductService();
+	private static final GoEditProductService instance = new GoEditProductService();
 
-	public static ShowInformationAboutProductService getInstance() {
+	public static GoEditProductService getInstance() {
 		return instance;
 	}
 
 	@Override
 	public boolean doService(HttpServletRequest request) {
-
-		Product product = null;
-		int idProduct = 0;
 		boolean result = false;
-		ProductDAO productDAO;
+		int idProduct = 0;
+		Product product = null;
+		ProductDAO productDAO = null;
 
 		idProduct = Integer.parseInt(request.getParameter("id_product"));
-		System.out.println("id=" + idProduct);
 		productDAO = DAOFactory.getInstance().getProductDAO();
-
 		try {
 			product = productDAO.getProduct(idProduct);
 		} catch (DAOException e) {
@@ -37,8 +34,6 @@ public class ShowInformationAboutProductService implements IService {
 		if (product != null) {
 			request.setAttribute("product", product);
 			result = true;
-		} else {
-			request.setAttribute("product", null);
 		}
 		return result;
 	}

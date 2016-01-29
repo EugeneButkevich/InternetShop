@@ -12,5 +12,8 @@ public interface ProductDAO {
 	Product getProduct(int idProduct) throws DAOException;
 	void addNewCategory(String nameCategory) throws DAOException;
 	void addNewProduct(Product product) throws DAOException;
+	void editProduct(Product product) throws DAOException;
+	void removeProduct(int idProduct) throws DAOException;
+	void updateQuantityOfProductsInStock(Product product, int newValueOfQuantity) throws DAOException;
 
 }

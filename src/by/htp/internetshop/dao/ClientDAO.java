@@ -15,6 +15,7 @@ public interface ClientDAO {
 			String phone, String address, String email) throws DAOException;
 	List<Client> getClientsThatAreNotIncludedInBlacklist() throws DAOException;
 	List<Client> getBlacklist() throws DAOException;
-	void addToBlacklict (int id_client) throws DAOException;
-	void removeFromBlacklist(int id_client) throws DAOException;
+	void addToBlacklict (int idClient) throws DAOException;
+	void removeFromBlacklist(int idClient) throws DAOException;
+	String getAddressOfClient(int idClient) throws DAOException;
 }

@@ -25,6 +25,7 @@ public class SQLClientDAO implements ClientDAO {
 	private static final String LOGIN_CHECK_SQL = "SELECT id_client FROM client WHERE login=?";
 	private static final String GET_CLIENTS_THAT_ARE_NOT_INCLUDED_IN_BLACKLIST_SQL = "SELECT id_client, login, password, surname, name, registrationDate, phone, address, email FROM client WHERE NOT id_client IN (SELECT id_client FROM blacklist)";
 	private static final String GET_BLACKLIST_SQL = "SELECT id_client, login, password, surname, name, registrationDate, phone, address, email FROM client WHERE id_client IN (SELECT id_client FROM blacklist)";
+	private static final String GET_ADDRESS_SQL = "SELECT address FROM client WHERE id_client=?";
 
 	private final static SQLClientDAO instance = new SQLClientDAO();
 
@@ -303,22 +304,14 @@ public class SQLClientDAO implements ClientDAO {
 			statement = connection.prepareStatement(GET_CLIENTS_THAT_ARE_NOT_INCLUDED_IN_BLACKLIST_SQL);
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
-				System.out.println("Зашли в resultset.next");
 				client = new Client();
 				client.setId(resultSet.getInt(1));
-				System.out.println(resultSet.getInt(1));
 				client.setLogin(resultSet.getString(2));
-				System.out.println(resultSet.getString(2));
 				client.setPassword(resultSet.getString(3));
-				System.out.println(resultSet.getString(3));
 				client.setSurname(resultSet.getString(4));
-				System.out.println(resultSet.getString(4));
 				client.setName(resultSet.getString(5));
-				System.out.println(resultSet.getString(5));
 				client.setRegistrationDate(resultSet.getDate(6));
-				System.out.println(resultSet.getDate(6));
 				client.setPhone(resultSet.getString(7));
-				System.out.println(resultSet.getString(7));
 				client.setAddress(resultSet.getString(8));
 				client.setEmail(resultSet.getString(9));
 				clientList.add(client);
@@ -390,5 +383,43 @@ public class SQLClientDAO implements ClientDAO {
 			}
 		}
 		return clientList;
+	}
+
+	@Override
+	public String getAddressOfClient(int idClient) throws DAOException {
+		String address = null;
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		try {
+			connection = ConnectionPool.getInstance().takeConnection();
+			statement = connection.prepareStatement(GET_ADDRESS_SQL);
+			statement.setInt(1, idClient);
+			resultSet = statement.executeQuery();
+
+			while (resultSet.next()) {
+				address = resultSet.getString(1);
+			}
+
+		} catch (ConnectionPoolException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			throw new DAOException("Error!");
+		} finally {
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					// logging ERROR
+				}
+			}
+			// return connection into connection pool
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return address;
 	}
 }

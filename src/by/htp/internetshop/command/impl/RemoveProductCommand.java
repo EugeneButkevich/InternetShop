@@ -5,21 +5,18 @@ import javax.servlet.http.HttpServletRequest;
 import by.htp.internetshop.command.CommandException;
 import by.htp.internetshop.command.ICommand;
 import by.htp.internetshop.controller.JspPageName;
-import by.htp.internetshop.service.impl.RecordAllCategoriesInSession;
+import by.htp.internetshop.service.impl.RemoveProductService;
 
-public class ShowProductsCommand implements ICommand {
+public class RemoveProductCommand implements ICommand {
 
 	@Override
 	public String execute(HttpServletRequest request) throws CommandException {
-
 		String page = null;
 		boolean result = false;
 
-		result = RecordAllCategoriesInSession.getInstanse().doService(request);
-
+		result = RemoveProductService.getInstance().doService(request);
 		if (result) {
 			page = JspPageName.MAIN_PAGE;
-			System.out.println("пытаемся перейти в мэйн");
 		}
 		return page;
 	}

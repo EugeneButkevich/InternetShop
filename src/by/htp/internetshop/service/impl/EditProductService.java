@@ -8,11 +8,11 @@ import by.htp.internetshop.dao.ProductDAO;
 import by.htp.internetshop.domain.Product;
 import by.htp.internetshop.service.IService;
 
-public class AddNewProductService implements IService {
+public class EditProductService implements IService {
 
-	private static final AddNewProductService instance = new AddNewProductService();
+	private static final EditProductService instance = new EditProductService();
 
-	public static AddNewProductService getInstance() {
+	public static EditProductService getInstance() {
 		return instance;
 	}
 
@@ -21,6 +21,7 @@ public class AddNewProductService implements IService {
 		boolean result = true;
 		Product product = new Product();
 		String idCategory = null;
+		String idProduct = null;
 		String nameProduct = null;
 		String costOfProduct = null;
 		String quantityOfProduct = null;
@@ -29,26 +30,29 @@ public class AddNewProductService implements IService {
 		idCategory = request.getParameter("id_category");
 		product.setIdCategory(Integer.parseInt(idCategory));
 
+		idProduct = request.getParameter("id_product");
+		product.setId(Integer.parseInt(idProduct));
+
 		nameProduct = request.getParameter("name_product");
 		if (nameProduct == "") {
-			request.setAttribute("errorAddOrEditProduct", 1);
+			request.getSession(true).setAttribute("errorAddOrEditProduct", 1);
 			return false;
 		}
 		product.setName(nameProduct);
 
 		costOfProduct = request.getParameter("cost_product");
 		if (costOfProduct == "") {
-			request.setAttribute("errorAddOrEditProduct", 2);
+			request.getSession(true).setAttribute("errorAddOrEditProduct", 2);
 			return false;
 		}
 		try {
 			if (Integer.parseInt(costOfProduct) < 0) {
-				request.setAttribute("errorAddOrEditProduct", 3);
+				request.getSession(true).setAttribute("errorAddOrEditProduct", 3);
 				return false;
 			}
 			product.setPrice(Integer.parseInt(costOfProduct));
 		} catch (Exception e) {
-			request.setAttribute("errorAddOrEditProduct", 5);
+			request.getSession(true).setAttribute("errorAddOrEditProduct", 5);
 			return false;
 		}
 
@@ -58,12 +62,12 @@ public class AddNewProductService implements IService {
 		} else {
 			try {
 				if (Integer.parseInt(quantityOfProduct) < 0) {
-					request.setAttribute("errorAddOrEditProduct", 4);
+					request.getSession(true).setAttribute("errorAddOrEditProduct", 4);
 					return false;
 				}
 				product.setQuantityInStock(Integer.parseInt(quantityOfProduct));
 			} catch (Exception e) {
-				request.setAttribute("errorAddOrEditProduct", 6);
+				request.getSession(true).setAttribute("errorAddOrEditProduct", 6);
 				return false;
 			}
 		}
@@ -71,7 +75,7 @@ public class AddNewProductService implements IService {
 		if (result) {
 			productDAO = DAOFactory.getInstance().getProductDAO();
 			try {
-				productDAO.addNewProduct(product);
+				productDAO.editProduct(product);
 			} catch (DAOException e) {
 				e.printStackTrace();
 			}

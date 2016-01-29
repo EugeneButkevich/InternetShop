@@ -15,5 +15,7 @@ public class JspPageName {
 	public static final String BLACKLIST_PAGE = "WEB-INF/jsp/blacklistPage.jsp";
 	public static final String SINGLE_PRODUCT_PAGE = "WEB-INF/jsp/singleProductPage.jsp";
 	public static final String Add_NEW_PRODUCT_PAGE = "WEB-INF/jsp/addProductPage.jsp";
+	public static final String EDIT_PRODUCT_PAGE = "WEB-INF/jsp/editProductPage.jsp";
+	public static final String SUCCESSFUL_ORDER_PAGE = "WEB-INF/jsp/successfulOrderPage.jsp";
 
 }

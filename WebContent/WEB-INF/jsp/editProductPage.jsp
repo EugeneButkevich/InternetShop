@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Страница добавления нового продукта</title>
+<title>Страница редактирования продукта</title>
 <fmt:setLocale value="${sessionScope.local}" />
 <fmt:setBundle basename="localization.local" var="loc" />
 <fmt:message bundle="${loc}" key="local.errorAddOrEditProduct1" var="errorAddOrEditProduct1" />
@@ -16,62 +16,76 @@
 <fmt:message bundle="${loc}" key="local.errorAddOrEditProduct5" var="errorAddOrEditProduct5" />
 <fmt:message bundle="${loc}" key="local.errorAddOrEditProduct6" var="errorAddOrEditProduct6" />
 <fmt:message bundle="${loc}" key="local.idNumberOfCategory" var="idNumberOfCategory" />
+<fmt:message bundle="${loc}" key="local.idNumberOfProduct" var="idNumberOfProduct" />
 <fmt:message bundle="${loc}" key="local.nameProduct" var="nameProduct" />
 <fmt:message bundle="${loc}" key="local.cost" var="cost" />
 <fmt:message bundle="${loc}" key="local.quantityMessage1" var="quantityMessage1" />
 <fmt:message bundle="${loc}" key="local.quantityMessage2" var="quantityMessage2" />
-<fmt:message bundle="${loc}" key="local.nameOfOperation3" var="nameOfOperation3" />
+<fmt:message bundle="${loc}" key="local.nameOfOperation4" var="nameOfOperation4" />
 </head>
 <body>
 
+	<jsp:useBean id="product" class="by.htp.internetshop.domain.Product" scope="request" />
+
 	<jsp:include page="modules/header.jsp" />
-	
-	<c:if test="${requestScope.errorAddOrEditProduct==1}">
+
+	<c:if test="${sessionScope.errorAddOrEditProduct==1}">
 		<font color="#CC0000"> ${errorAddOrEditProduct1} </font>
+		<c:set var="errorAddOrEditProduct" value="0" scope="session" />
 	</c:if>
 	
-	<c:if test="${requestScope.errorAddOrEditProduct==2}">
+	<c:if test="${sessionScope.errorAddOrEditProduct==2}">
 		<font color="#CC0000"> ${errorAddOrEditProduct2} </font>
+		<c:set var="errorAddOrEditProduct" value="0" scope="session" />
 	</c:if>
 	
-	<c:if test="${requestScope.errorAddOrEditProduct==3}">
+	<c:if test="${sessionScope.errorAddOrEditProduct==3}">
 		<font color="#CC0000"> ${errorAddOrEditProduct3} </font>
+		<c:set var="errorAddOrEditProduct" value="0" scope="session" />
 	</c:if>
 	
-	<c:if test="${requestScope.errorAddOrEditProduct==4}">
+	<c:if test="${sessionScope.errorAddOrEditProduct==4}">
 		<font color="#CC0000"> ${errorAddOrEditProduct4} </font>
+		<c:set var="errorAddOrEditProduct" value="0" scope="session" />
 	</c:if>
 	
-	<c:if test="${requestScope.errorAddOrEditProduct==5}">
+	<c:if test="${sessionScope.errorAddOrEditProduct==5}">
 		<font color="#CC0000"> ${errorAddOrEditProduct5} </font>
+		<c:set var="errorAddOrEditProduct" value="0" scope="session" />
 	</c:if>
 	
-	<c:if test="${requestScope.errorAddOrEditProduct==6}">
+	<c:if test="${sessionScope.errorAddOrEditProduct==6}">
 		<font color="#CC0000"> ${errorAddOrEditProduct6} </font>
+		<c:set var="errorAddOrEditProduct" value="0" scope="session" />
 	</c:if>
-	
+
 	<form action="controller" method="post">
-		<input type="hidden" name="command" value="add_new_product" />
+		<input type="hidden" name="command" value="edit_product" />
 		<table width="50%">
 			<tr>
 				<td>${idNumberOfCategory}:</td>
-				<td><input type="text" readonly="readonly" name="id_category" value="${requestScope.id_category}" /></td>
+				<td><input type="text" readonly="readonly" name="id_category" value="${requestScope.product.idCategory}" /></td>
+			</tr>
+			<tr>
+				<td>${idNumberOfProduct}:</td>
+				<td><input type="text" readonly="readonly" name="id_product" value="${requestScope.product.id}" /></td>
 			</tr>
 			<tr>
 				<td>${nameProduct}:</td>
-				<td><input type="text" name="name_product" value="" /></td>
+				<td><input type="text" name="name_product" value="${requestScope.product.name}" /></td>
 			</tr>
 			<tr>
-				<td>${cost}, $:</td>
-				<td><input type="text" name="cost_product" value="" /></td>
+				<td>${cost},$:</td>
+				<td><input type="text" name="cost_product" value="${requestScope.product.price}" /></td>
 			</tr>
 			<tr>
-				<td>${quantityMessage1}, ${quantityMessage2}:</td>
-				<td><input type="text" name="quantity" value="" /></td>
+				<td>${quantityMessage1},${quantityMessage2}:</td>
+				<td><input type="text" name="quantity" value="${requestScope.product.quantityInStock}" /></td>
 			</tr>
 			<tr>
 				<td></td>
-				<td align="left"><input type="submit" value="${nameOfOperation3}" /></td>
+				<td align="center"><input type="submit"
+					value="${nameOfOperation4}" /></td>
 			</tr>
 		</table>
 	</form>

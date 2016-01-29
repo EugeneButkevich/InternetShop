@@ -42,7 +42,7 @@ public class SpecialJSPTag extends TagSupport {
 				out.write("<tr>");
 				out.write("<td> </td>");
 				out.write("<td><font size=\"+1\">");
-				out.write("<a href=\"controller?command=show_information_about_product&id=" + product.getId() + "\"> " + product.getName() + "</a> <br />");
+				out.write("<a href=\"controller?command=show_information_about_product&id_product=" + product.getId() + "\"> " + product.getName() + "</a> <br />");
 				out.write("</font></td>");
 				out.write("</tr>");
 			}

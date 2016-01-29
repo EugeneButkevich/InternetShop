@@ -14,7 +14,7 @@ public class Client {
 	private String address;
 	private String email;
 
-	public int getId_client() {
+	public int getId() {
 		return id;
 	}
 
