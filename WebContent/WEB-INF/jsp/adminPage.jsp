@@ -9,8 +9,7 @@
 <title>Страница админа</title>
 <fmt:setLocale value="${sessionScope.local}" />
 <fmt:setBundle basename="localization.local" var="loc" />
-<fmt:message bundle="${loc}" key="local.listOfClients"
-	var="listOfClients" />
+<fmt:message bundle="${loc}" key="local.listOfClients" var="listOfClients" />
 <fmt:message bundle="${loc}" key="local.productsPage" var="productsPage" />
 <fmt:message bundle="${loc}" key="local.blacklist" var="blacklist" />
 </head>

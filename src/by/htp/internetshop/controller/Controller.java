@@ -16,13 +16,6 @@ public class Controller extends HttpServlet {
 
 	public Controller() {
 		super();
-		System.out.println("ddddd");
-	}
-
-	@Override
-	public void init(ServletConfig config) throws ServletException {
-		super.init(config);
-		System.out.println("erwh");
 	}
 
 	@Override

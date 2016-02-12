@@ -23,7 +23,6 @@ public class OrderCommand implements ICommand {
 			ShowInformationAboutProductService.getInstance().doService(request);
 			page = JspPageName.SINGLE_PRODUCT_PAGE;
 		}
-		System.out.println("page="+page);
 		return page;
 	}
 }
