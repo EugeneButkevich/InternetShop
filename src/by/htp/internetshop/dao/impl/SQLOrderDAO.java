@@ -18,8 +18,7 @@ public class SQLOrderDAO implements OrderDAO {
 	private static final String ORDER1_SQL = "INSERT INTO order_ (id_client, address, order_date, status, amount) VALUES (?,?,?,?,?)";
 	private static final String GET_LAST_ID_ORDER_SQL = "SELECT id_order FROM order_ ORDER BY id_order DESC LIMIT 1";
 	private static final String ORDER2_SQL = "INSERT INTO order_has_product (id_order, id_product, count) VALUES (?,?,?)";
-		
-	
+
 	private static final String INITIAL_ORDER_STATUS = "В процессе";
 
 	private final static SQLOrderDAO instance = new SQLOrderDAO();
@@ -74,7 +73,9 @@ public class SQLOrderDAO implements OrderDAO {
 			}
 			// return connection into connection pool
 			try {
-				connection.close();
+				if (connection != null) {
+					connection.close();
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

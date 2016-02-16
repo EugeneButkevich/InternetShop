@@ -2,6 +2,7 @@ package by.htp.internetshop.service.impl;
 
 import javax.servlet.http.HttpServletRequest;
 
+import by.htp.internetshop.controller.RequestParameterName;
 import by.htp.internetshop.dao.ClientDAO;
 import by.htp.internetshop.dao.DAOException;
 import by.htp.internetshop.dao.DAOFactory;
@@ -30,22 +31,22 @@ public class OrderService implements IService {
 		OrderDAO orderDAO = null;
 		ProductDAO productDAO = null;
 
-		client.setId(Integer.parseInt(request.getParameter("id_client")));
-		idProduct = Integer.parseInt(request.getParameter("id_product"));
-		numberOfInstances = request.getParameter("number_of_instances");
+		client.setId(Integer.parseInt(request.getParameter(RequestParameterName.ID_CLIENT)));
+		idProduct = Integer.parseInt(request.getParameter(RequestParameterName.ID_PRODUCT));
+		numberOfInstances = request.getParameter(RequestParameterName.NUMBER_OF_INSTANCES);
 
 		if (numberOfInstances == "" || numberOfInstances.equals("0")) {
-			request.setAttribute("errorOrder", 1);
+			request.setAttribute(RequestParameterName.ERROR_ORDER, 1);
 			return false;
 		}
 
 		try {
 			if (Integer.parseInt(numberOfInstances) < 0) {
-				request.setAttribute("errorOrder", 2);
+				request.setAttribute(RequestParameterName.ERROR_ORDER, 2);
 				return false;
 			}
 		} catch (Exception e) {
-			request.setAttribute("errorOrder", 3);
+			request.setAttribute(RequestParameterName.ERROR_ORDER, 3);
 			return false;
 		}
 
@@ -57,12 +58,13 @@ public class OrderService implements IService {
 			try {
 				client.setAddress(clientDAO.getAddressOfClient(client.getId()));
 				product = productDAO.getProduct(idProduct);
-				if (Integer.parseInt(numberOfInstances)>product.getQuantityInStock()){
-					request.setAttribute("errorOrder", 4);
+				if (Integer.parseInt(numberOfInstances) > product.getQuantityInStock()) {
+					request.setAttribute(RequestParameterName.ERROR_ORDER, 4);
 					return false;
 				}
 				orderDAO.getOrder(client, product, Integer.parseInt(numberOfInstances));
-				productDAO.updateQuantityOfProductsInStock(product, product.getQuantityInStock()-Integer.parseInt(numberOfInstances));
+				productDAO.updateQuantityOfProductsInStock(product,
+						product.getQuantityInStock() - Integer.parseInt(numberOfInstances));
 				result = true;
 			} catch (DAOException e) {
 				e.printStackTrace();

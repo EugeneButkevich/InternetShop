@@ -6,7 +6,7 @@ import by.htp.internetshop.command.CommandException;
 import by.htp.internetshop.command.ICommand;
 import by.htp.internetshop.controller.JspPageName;
 import by.htp.internetshop.service.impl.AddNewCategoryProductService;
-import by.htp.internetshop.service.impl.RecordAllCategoriesInSession;
+import by.htp.internetshop.service.impl.RecordAllCategoriesService;
 
 public class AddNewCategoryProductCommand implements ICommand {
 
@@ -17,7 +17,7 @@ public class AddNewCategoryProductCommand implements ICommand {
 		result = AddNewCategoryProductService.getInstance().doService(request);
 
 		if (result) {
-			RecordAllCategoriesInSession.getInstanse().doService(request);
+			RecordAllCategoriesService.getInstance().doService(request);
 		}
 		return JspPageName.MAIN_PAGE;
 	}

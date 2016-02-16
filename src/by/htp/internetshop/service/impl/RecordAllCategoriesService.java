@@ -2,35 +2,39 @@ package by.htp.internetshop.service.impl;
 
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
+import by.htp.internetshop.controller.RequestParameterName;
 import by.htp.internetshop.dao.DAOException;
 import by.htp.internetshop.dao.DAOFactory;
 import by.htp.internetshop.dao.ProductDAO;
 import by.htp.internetshop.domain.ProductCategory;
 import by.htp.internetshop.service.IService;
 
-public class RecordAllCategoriesInSession implements IService {
+public class RecordAllCategoriesService implements IService {
 
-	private static final RecordAllCategoriesInSession instance = new RecordAllCategoriesInSession();
+	private static final RecordAllCategoriesService instance = new RecordAllCategoriesService();
 
-	public static RecordAllCategoriesInSession getInstanse() {
+	public static RecordAllCategoriesService getInstance() {
 		return instance;
 	}
 
 	@Override
 	public boolean doService(HttpServletRequest request) {
+		boolean result = false;
 		List<ProductCategory> categoryList = null;
-		boolean result = true;
-
 		ProductDAO productDAO = DAOFactory.getInstance().getProductDAO();
+
 		try {
 			categoryList = productDAO.getAllCategories();
-			request.getSession(true).setAttribute("allCategories", categoryList);
+			result = true;
 		} catch (DAOException e) {
 			e.printStackTrace();
-			result = false;
 		}
+
+		ServletContext application = request.getServletContext();
+		application.setAttribute(RequestParameterName.ALL_CATEGORIES, categoryList);
 		return result;
 	}
 }

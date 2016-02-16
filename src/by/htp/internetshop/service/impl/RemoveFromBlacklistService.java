@@ -2,6 +2,7 @@ package by.htp.internetshop.service.impl;
 
 import javax.servlet.http.HttpServletRequest;
 
+import by.htp.internetshop.controller.RequestParameterName;
 import by.htp.internetshop.dao.ClientDAO;
 import by.htp.internetshop.dao.DAOException;
 import by.htp.internetshop.dao.DAOFactory;
@@ -22,7 +23,7 @@ public class RemoveFromBlacklistService implements IService {
 		boolean result = false;
 		ClientDAO clientdDAO = null;
 
-		id_client = Integer.parseInt(request.getParameter("id"));
+		id_client = Integer.parseInt(request.getParameter(RequestParameterName.ID_CLIENT));
 		clientdDAO = DAOFactory.getInstance().getClientDAO();
 
 		try {

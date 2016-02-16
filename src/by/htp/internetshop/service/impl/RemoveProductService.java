@@ -2,6 +2,7 @@ package by.htp.internetshop.service.impl;
 
 import javax.servlet.http.HttpServletRequest;
 
+import by.htp.internetshop.controller.RequestParameterName;
 import by.htp.internetshop.dao.DAOException;
 import by.htp.internetshop.dao.DAOFactory;
 import by.htp.internetshop.dao.ProductDAO;
@@ -21,7 +22,7 @@ public class RemoveProductService implements IService {
 		int idProduct = 0;
 		ProductDAO productDAO = null;
 
-		idProduct = Integer.parseInt(request.getParameter("id_product"));
+		idProduct = Integer.parseInt(request.getParameter(RequestParameterName.ID_PRODUCT));
 		productDAO = DAOFactory.getInstance().getProductDAO();
 		try {
 			productDAO.removeProduct(idProduct);

@@ -2,6 +2,7 @@ package by.htp.internetshop.service.impl;
 
 import javax.servlet.http.HttpServletRequest;
 
+import by.htp.internetshop.controller.RequestParameterName;
 import by.htp.internetshop.dao.DAOException;
 import by.htp.internetshop.dao.DAOFactory;
 import by.htp.internetshop.dao.ProductDAO;
@@ -21,7 +22,7 @@ public class AddNewCategoryProductService implements IService {
 		boolean result = false;
 		ProductDAO productDAO = null;
 
-		nameCategory = request.getParameter("name_category");
+		nameCategory = request.getParameter(RequestParameterName.NAME_CATEGORY);
 		if (!nameCategory.isEmpty()) {
 			productDAO = DAOFactory.getInstance().getProductDAO();
 			try {
@@ -31,7 +32,7 @@ public class AddNewCategoryProductService implements IService {
 				e.printStackTrace();
 			}
 		} else {
-			request.getSession(true).setAttribute("errorAddCategory", 1);
+			request.getSession(true).setAttribute(RequestParameterName.ERROR_ADD_CATEGORY, 1);
 		}
 		return result;
 	}

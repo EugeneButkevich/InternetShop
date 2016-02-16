@@ -17,10 +17,10 @@
 
 	<jsp:include page="modules/header.jsp" />
 
-	<a href="controller?command=show_products"> ${productsPage} </a> <br /> <br />
+	<a href="index.jsp"> ${productsPage} </a> <br /> <br />
 
 	<a href="controller?command=show_correct_clients"> ${listOfClients} </a> <br /> <br />
-	
+
 	<a href="controller?command=show_blacklist"> ${blacklist} </a> <br /> <br />
 
 </body>

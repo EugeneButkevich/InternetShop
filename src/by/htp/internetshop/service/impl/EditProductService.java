@@ -2,6 +2,7 @@ package by.htp.internetshop.service.impl;
 
 import javax.servlet.http.HttpServletRequest;
 
+import by.htp.internetshop.controller.RequestParameterName;
 import by.htp.internetshop.dao.DAOException;
 import by.htp.internetshop.dao.DAOFactory;
 import by.htp.internetshop.dao.ProductDAO;
@@ -27,47 +28,47 @@ public class EditProductService implements IService {
 		String quantityOfProduct = null;
 		ProductDAO productDAO = null;
 
-		idCategory = request.getParameter("id_category");
+		idCategory = request.getParameter(RequestParameterName.ID_CATEGORY);
 		product.setIdCategory(Integer.parseInt(idCategory));
 
-		idProduct = request.getParameter("id_product");
+		idProduct = request.getParameter(RequestParameterName.ID_PRODUCT);
 		product.setId(Integer.parseInt(idProduct));
 
-		nameProduct = request.getParameter("name_product");
+		nameProduct = request.getParameter(RequestParameterName.NAME_PRODUCT);
 		if (nameProduct == "") {
-			request.getSession(true).setAttribute("errorAddOrEditProduct", 1);
+			request.getSession(true).setAttribute(RequestParameterName.ERROR_ADD_OR_EDIT_PRODUCT, 1);
 			return false;
 		}
 		product.setName(nameProduct);
 
-		costOfProduct = request.getParameter("cost_product");
+		costOfProduct = request.getParameter(RequestParameterName.COST_PRODUCT);
 		if (costOfProduct == "") {
-			request.getSession(true).setAttribute("errorAddOrEditProduct", 2);
+			request.getSession(true).setAttribute(RequestParameterName.ERROR_ADD_OR_EDIT_PRODUCT, 2);
 			return false;
 		}
 		try {
 			if (Integer.parseInt(costOfProduct) < 0) {
-				request.getSession(true).setAttribute("errorAddOrEditProduct", 3);
+				request.getSession(true).setAttribute(RequestParameterName.ERROR_ADD_OR_EDIT_PRODUCT, 3);
 				return false;
 			}
 			product.setPrice(Integer.parseInt(costOfProduct));
 		} catch (Exception e) {
-			request.getSession(true).setAttribute("errorAddOrEditProduct", 5);
+			request.getSession(true).setAttribute(RequestParameterName.ERROR_ADD_OR_EDIT_PRODUCT, 5);
 			return false;
 		}
 
-		quantityOfProduct = request.getParameter("quantity");
+		quantityOfProduct = request.getParameter(RequestParameterName.QUANTITY_OF_PRODUCT);
 		if (quantityOfProduct == "") {
 			product.setQuantityInStock(0);
 		} else {
 			try {
 				if (Integer.parseInt(quantityOfProduct) < 0) {
-					request.getSession(true).setAttribute("errorAddOrEditProduct", 4);
+					request.getSession(true).setAttribute(RequestParameterName.ERROR_ADD_OR_EDIT_PRODUCT, 4);
 					return false;
 				}
 				product.setQuantityInStock(Integer.parseInt(quantityOfProduct));
 			} catch (Exception e) {
-				request.getSession(true).setAttribute("errorAddOrEditProduct", 6);
+				request.getSession(true).setAttribute(RequestParameterName.ERROR_ADD_OR_EDIT_PRODUCT, 6);
 				return false;
 			}
 		}

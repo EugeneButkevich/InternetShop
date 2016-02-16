@@ -61,7 +61,9 @@ public class SQLClientDAO implements ClientDAO {
 			}
 			// return connection into connection pool
 			try {
-				connection.close();
+				if (connection != null) {
+					connection.close();
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -98,7 +100,9 @@ public class SQLClientDAO implements ClientDAO {
 			}
 			// return connection into connection pool
 			try {
-				connection.close();
+				if (connection != null) {
+					connection.close();
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -146,7 +150,9 @@ public class SQLClientDAO implements ClientDAO {
 			}
 			// return connection into connection pool
 			try {
-				connection.close();
+				if (connection != null) {
+					connection.close();
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -180,7 +186,9 @@ public class SQLClientDAO implements ClientDAO {
 			}
 			// return connection into connection pool
 			try {
-				connection.close();
+				if (connection != null) {
+					connection.close();
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -220,7 +228,9 @@ public class SQLClientDAO implements ClientDAO {
 			}
 			// return connection into connection pool
 			try {
-				connection.close();
+				if (connection != null) {
+					connection.close();
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -253,7 +263,9 @@ public class SQLClientDAO implements ClientDAO {
 			}
 			// return connection into connection pool
 			try {
-				connection.close();
+				if (connection != null) {
+					connection.close();
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -285,7 +297,9 @@ public class SQLClientDAO implements ClientDAO {
 			}
 			// return connection into connection pool
 			try {
-				connection.close();
+				if (connection != null) {
+					connection.close();
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -330,7 +344,9 @@ public class SQLClientDAO implements ClientDAO {
 			}
 			// return connection into connection pool
 			try {
-				connection.close();
+				if (connection != null) {
+					connection.close();
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -377,7 +393,9 @@ public class SQLClientDAO implements ClientDAO {
 			}
 			// return connection into connection pool
 			try {
-				connection.close();
+				if (connection != null) {
+					connection.close();
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -415,7 +433,9 @@ public class SQLClientDAO implements ClientDAO {
 			}
 			// return connection into connection pool
 			try {
-				connection.close();
+				if (connection != null) {
+					connection.close();
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

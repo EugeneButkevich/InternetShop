@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import by.htp.internetshop.controller.RequestParameterName;
 import by.htp.internetshop.dao.ClientDAO;
 import by.htp.internetshop.dao.DAOException;
 import by.htp.internetshop.dao.DAOFactory;
@@ -31,10 +32,10 @@ public class ShowBlacklistService implements IService {
 		}
 
 		if (!clientList.isEmpty()) {
-			request.getSession(false).setAttribute("clients", clientList);
+			request.getSession(false).setAttribute(RequestParameterName.CLIENTS, clientList);
 			return true;
 		} else {
-			request.getSession(false).setAttribute("clients", null);
+			request.getSession(false).setAttribute(RequestParameterName.CLIENTS, null);
 			return false;
 		}
 	}

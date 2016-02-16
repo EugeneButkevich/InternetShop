@@ -2,6 +2,7 @@ package by.htp.internetshop.service.impl;
 
 import javax.servlet.http.HttpServletRequest;
 
+import by.htp.internetshop.controller.RequestParameterName;
 import by.htp.internetshop.dao.DAOException;
 import by.htp.internetshop.dao.DAOFactory;
 import by.htp.internetshop.dao.ProductDAO;
@@ -26,44 +27,44 @@ public class AddNewProductService implements IService {
 		String quantityOfProduct = null;
 		ProductDAO productDAO = null;
 
-		idCategory = request.getParameter("id_category");
+		idCategory = request.getParameter(RequestParameterName.ID_CATEGORY);
 		product.setIdCategory(Integer.parseInt(idCategory));
 
-		nameProduct = request.getParameter("name_product");
+		nameProduct = request.getParameter(RequestParameterName.NAME_PRODUCT);
 		if (nameProduct == "") {
-			request.setAttribute("errorAddOrEditProduct", 1);
+			request.setAttribute(RequestParameterName.ERROR_ADD_OR_EDIT_PRODUCT, 1);
 			return false;
 		}
 		product.setName(nameProduct);
 
-		costOfProduct = request.getParameter("cost_product");
+		costOfProduct = request.getParameter(RequestParameterName.COST_PRODUCT);
 		if (costOfProduct == "") {
-			request.setAttribute("errorAddOrEditProduct", 2);
+			request.setAttribute(RequestParameterName.ERROR_ADD_OR_EDIT_PRODUCT, 2);
 			return false;
 		}
 		try {
 			if (Integer.parseInt(costOfProduct) < 0) {
-				request.setAttribute("errorAddOrEditProduct", 3);
+				request.setAttribute(RequestParameterName.ERROR_ADD_OR_EDIT_PRODUCT, 3);
 				return false;
 			}
 			product.setPrice(Integer.parseInt(costOfProduct));
 		} catch (Exception e) {
-			request.setAttribute("errorAddOrEditProduct", 5);
+			request.setAttribute(RequestParameterName.ERROR_ADD_OR_EDIT_PRODUCT, 5);
 			return false;
 		}
 
-		quantityOfProduct = request.getParameter("quantity");
+		quantityOfProduct = request.getParameter(RequestParameterName.QUANTITY_OF_PRODUCT);
 		if (quantityOfProduct == "") {
 			product.setQuantityInStock(0);
 		} else {
 			try {
 				if (Integer.parseInt(quantityOfProduct) < 0) {
-					request.setAttribute("errorAddOrEditProduct", 4);
+					request.setAttribute(RequestParameterName.ERROR_ADD_OR_EDIT_PRODUCT, 4);
 					return false;
 				}
 				product.setQuantityInStock(Integer.parseInt(quantityOfProduct));
 			} catch (Exception e) {
-				request.setAttribute("errorAddOrEditProduct", 6);
+				request.setAttribute(RequestParameterName.ERROR_ADD_OR_EDIT_PRODUCT, 6);
 				return false;
 			}
 		}

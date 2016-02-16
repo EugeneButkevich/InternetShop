@@ -1,8 +1,8 @@
 package by.htp.internetshop.controller;
 
 import java.io.IOException;
+
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +29,9 @@ public class Controller extends HttpServlet {
 			throws ServletException, IOException {
 
 		request.setCharacterEncoding("UTF-8");
+		if (request.getSession().isNew()) {
+			System.out.println("Новая сессия");
+		}
 		String commandName = request.getParameter(RequestParameterName.COMMAND_NAME);
 		System.out.println("commandName=" + commandName);
 		ICommand command = ControllerHelper.getInstance().getCommand(commandName);

@@ -63,7 +63,9 @@ public class SQLProductDAO implements ProductDAO {
 			}
 			// return connection into connection pool
 			try {
-				connection.close();
+				if (connection != null) {
+					connection.close();
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -107,7 +109,9 @@ public class SQLProductDAO implements ProductDAO {
 			}
 			// return connection into connection pool
 			try {
-				connection.close();
+				if (connection != null) {
+					connection.close();
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -149,7 +153,9 @@ public class SQLProductDAO implements ProductDAO {
 			}
 			// return connection into connection pool
 			try {
-				connection.close();
+				if (connection != null) {
+					connection.close();
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -180,7 +186,9 @@ public class SQLProductDAO implements ProductDAO {
 			}
 			// return connection into connection pool
 			try {
-				connection.close();
+				if (connection != null) {
+					connection.close();
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -217,7 +225,9 @@ public class SQLProductDAO implements ProductDAO {
 			}
 			// return connection into connection pool
 			try {
-				connection.close();
+				if (connection != null) {
+					connection.close();
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -250,7 +260,9 @@ public class SQLProductDAO implements ProductDAO {
 			}
 			// return connection into connection pool
 			try {
-				connection.close();
+				if (connection != null) {
+					connection.close();
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -280,7 +292,9 @@ public class SQLProductDAO implements ProductDAO {
 			}
 			// return connection into connection pool
 			try {
-				connection.close();
+				if (connection != null) {
+					connection.close();
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -311,7 +325,9 @@ public class SQLProductDAO implements ProductDAO {
 			}
 			// return connection into connection pool
 			try {
-				connection.close();
+				if (connection != null) {
+					connection.close();
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

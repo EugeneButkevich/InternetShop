@@ -35,7 +35,7 @@
 					<td align="center">
 						<form action="controller" method="post">
 							<input type="hidden" name="command" value="add_to_blacklist" /> <input
-								type="hidden" name="id" value="${client.id}" /> <input
+								type="hidden" name="id_client" value="${client.id}" /> <input
 								type="submit" value="${addToBlacklist2}!" />
 						</form>
 					</td>

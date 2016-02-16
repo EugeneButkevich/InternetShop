@@ -29,7 +29,7 @@
 	
 	<c:if test="${sessionScope.admin==null}">
 		<table width="50%" cellpadding="0">
-			<c:forEach items="${sessionScope.allCategories}" var="category_i">
+			<c:forEach items="${applicationScope.allCategories}" var="category_i">
 				<tr>
 					<td><font size="+2"><c:out value="${category_i.name}"/></font></td>
 					<td><mytag:getproducts category="${category_i}" /></td>
@@ -40,7 +40,7 @@
 
 	<c:if test="${sessionScope.admin!=null}">
 		<table width="50%">
-			<c:forEach items="${sessionScope.allCategories}" var="category_i">
+			<c:forEach items="${applicationScope.allCategories}" var="category_i">
 				<tr>
 					<td><font size="+2"><c:out value="${category_i.name}" /></font></td>
 					<td><mytag:getproductsforadmin category="${category_i}" nameedit="${nameOfOperation1}" 

@@ -7,7 +7,6 @@ import by.htp.internetshop.command.ICommand;
 import by.htp.internetshop.controller.JspPageName;
 import by.htp.internetshop.controller.RequestParameterName;
 import by.htp.internetshop.service.impl.AuthorizationService;
-import by.htp.internetshop.service.impl.RecordAllCategoriesInSession;
 
 public class AuthorizationCommand implements ICommand {
 
@@ -26,7 +25,6 @@ public class AuthorizationCommand implements ICommand {
 				if (request.getSession(true).getAttribute("admin") != null) {
 					page = JspPageName.ADMIN_PAGE;
 				} else if (request.getSession(true).getAttribute("client") != null) {
-					RecordAllCategoriesInSession.getInstanse().doService(request);
 					page = JspPageName.MAIN_PAGE;
 				}
 			} else {

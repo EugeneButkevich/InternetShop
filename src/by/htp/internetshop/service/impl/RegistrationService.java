@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
+import by.htp.internetshop.controller.RequestParameterName;
 import by.htp.internetshop.dao.ClientDAO;
 import by.htp.internetshop.dao.DAOException;
 import by.htp.internetshop.dao.DAOFactory;
@@ -32,27 +33,26 @@ public class RegistrationService implements IService {
 		String address;
 		String email;
 		boolean result = true;
-		System.out.println("Начальный result =" + result);
-		login = request.getParameter("login");
-		password = request.getParameter("password");
-		passwordAgain = request.getParameter("passwordAgain");
-		surname = request.getParameter("surname");
-		name = request.getParameter("name");
+		login = request.getParameter(RequestParameterName.LOGIN);
+		password = request.getParameter(RequestParameterName.PASSWORD);
+		passwordAgain = request.getParameter(RequestParameterName.PASSWORD_AGAIN);
+		surname = request.getParameter(RequestParameterName.SURNAME);
+		name = request.getParameter(RequestParameterName.NAME);
 		registrationDate = new Date(System.currentTimeMillis());
-		phone = request.getParameter("phone");
-		address = request.getParameter("address");
-		email = request.getParameter("email");
+		phone = request.getParameter(RequestParameterName.PHONE);
+		address = request.getParameter(RequestParameterName.ADDRESS);
+		email = request.getParameter(RequestParameterName.EMAIL);
 
 		ClientDAO clientDAO = DAOFactory.getInstance().getClientDAO();
 
 		if (!password.equals(passwordAgain)) {
-			request.setAttribute("errorRegistration", 1);
+			request.setAttribute(RequestParameterName.ERROR_REGISTRATION, 1);
 			result = false;
 		}
 
 		try {
 			if (!clientDAO.checkUniquenessOfLogin(login)) {
-				request.setAttribute("errorRegistration", 2);
+				request.setAttribute(RequestParameterName.ERROR_REGISTRATION, 2);
 				result = false;
 			}
 		} catch (DAOException e1) {
@@ -60,14 +60,14 @@ public class RegistrationService implements IService {
 		}
 
 		if ((login == "") || (password == "") || (surname == "") || (name == "") || (phone == "")) {
-			request.setAttribute("errorRegistration", 3);
+			request.setAttribute(RequestParameterName.ERROR_REGISTRATION, 3);
 			result = false;
 		}
 
 		Pattern p = Pattern.compile("[\\d\\s()\\-\\+]+");
 		Matcher matcher = p.matcher(phone);
 		if (!matcher.matches()) {
-			request.setAttribute("errorRegistration", 4);
+			request.setAttribute(RequestParameterName.ERROR_REGISTRATION, 4);
 			result = false;
 		}
 

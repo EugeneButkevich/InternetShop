@@ -50,7 +50,9 @@ public class SQLAdminDAO implements AdminDAO {
 			}
 			// return connection into connection pool
 			try {
-				connection.close();
+				if (connection != null) {
+					connection.close();
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -95,7 +97,9 @@ public class SQLAdminDAO implements AdminDAO {
 			}
 			// return connection into connection pool
 			try {
-				connection.close();
+				if (connection != null) {
+					connection.close();
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

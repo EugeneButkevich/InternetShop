@@ -30,19 +30,19 @@ public class AuthorizationService implements IService {
 		try {
 			if (adminDAO.checkAdmin(login, password)) {
 				Admin admin = adminDAO.getAdmin(login, password);
-				request.getSession(true).setAttribute("admin", admin);
+				request.getSession(true).setAttribute(RequestParameterName.ADMIN, admin);
 				return true;
 			} else if (clientDAO.checkClient(login, password)) {
 				if (clientDAO.thereIsClientInBlacklist(login, password)) {
-					request.getSession(true).setAttribute("errorAuthorization", 2);
+					request.getSession(true).setAttribute(RequestParameterName.ERROR_AUTHORIZATION, 2);
 					return false;
 				} else {
 					Client client = clientDAO.getClient(login, password);
-					request.getSession(true).setAttribute("client", client);
+					request.getSession(true).setAttribute(RequestParameterName.CLIENT, client);
 					return true;
 				}
 			} else {
-				request.getSession(true).setAttribute("errorAuthorization", 1);
+				request.getSession(true).setAttribute(RequestParameterName.ERROR_AUTHORIZATION, 1);
 				return false;
 			}
 		} catch (DAOException e) {

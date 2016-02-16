@@ -2,6 +2,7 @@ package by.htp.internetshop.service.impl;
 
 import javax.servlet.http.HttpServletRequest;
 
+import by.htp.internetshop.controller.RequestParameterName;
 import by.htp.internetshop.service.IService;
 
 public class GoAddProductService implements IService {
@@ -17,11 +18,10 @@ public class GoAddProductService implements IService {
 		boolean result = false;
 		String idCategory = null;
 
-		idCategory = request.getParameter("id_category");
-		System.out.println("idCategory="+idCategory);
+		idCategory = request.getParameter(RequestParameterName.ID_CATEGORY);
 
 		if (idCategory != null) {
-			request.setAttribute("id_category", idCategory);
+			request.setAttribute(RequestParameterName.ID_CATEGORY, idCategory);
 			result = true;
 		}
 		return result;
