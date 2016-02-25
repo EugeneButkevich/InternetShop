@@ -5,12 +5,15 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import by.htp.internetshop.dao.DAOException;
 import by.htp.internetshop.dao.OrderDAO;
 import by.htp.internetshop.dao.impl.connectionpool.ConnectionPool;
 import by.htp.internetshop.dao.impl.connectionpool.ConnectionPoolException;
 import by.htp.internetshop.domain.Client;
+import by.htp.internetshop.domain.Order;
 import by.htp.internetshop.domain.Product;
 
 public class SQLOrderDAO implements OrderDAO {
@@ -18,6 +21,9 @@ public class SQLOrderDAO implements OrderDAO {
 	private static final String ORDER1_SQL = "INSERT INTO order_ (id_client, address, order_date, status, amount) VALUES (?,?,?,?,?)";
 	private static final String GET_LAST_ID_ORDER_SQL = "SELECT id_order FROM order_ ORDER BY id_order DESC LIMIT 1";
 	private static final String ORDER2_SQL = "INSERT INTO order_has_product (id_order, id_product, count) VALUES (?,?,?)";
+	private static final String GET_ALL_ORDERS_OF_ONE_CLIENT_SQL = "SELECT * FROM order_ WHERE id_client=?";
+	private static final String CANCEL1_ORDER_SQL = "DELETE FROM order_has_product WHERE id_order=?";
+	private static final String CANCEL2_ORDER_SQL = "DELETE FROM order_ WHERE id_order=?";
 
 	private static final String INITIAL_ORDER_STATUS = "В процессе";
 
@@ -29,7 +35,7 @@ public class SQLOrderDAO implements OrderDAO {
 
 	@SuppressWarnings("resource")
 	@Override
-	public void getOrder(Client client, Product product, int numberOfInstances) throws DAOException {
+	public void addOrder(Client client, Product product, int numberOfInstances) throws DAOException {
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
@@ -71,7 +77,6 @@ public class SQLOrderDAO implements OrderDAO {
 					// logging ERROR
 				}
 			}
-			// return connection into connection pool
 			try {
 				if (connection != null) {
 					connection.close();
@@ -80,5 +85,88 @@ public class SQLOrderDAO implements OrderDAO {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	@Override
+	public List<Order> getAllOrdersOfOneClient(int id_client) throws DAOException {
+		List<Order> orderList = new ArrayList<Order>();
+		Order order = null;
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+
+		try {
+			connection = ConnectionPool.getInstance().takeConnection();
+			statement = connection.prepareStatement(GET_ALL_ORDERS_OF_ONE_CLIENT_SQL);
+			statement.setInt(1, id_client);
+			resultSet = statement.executeQuery();
+
+			while (resultSet.next()) {
+				order = new Order();
+				order.setIdOrder(resultSet.getInt(1));
+				order.setIdClient(resultSet.getInt(2));
+				order.setAddress(resultSet.getString(3));
+				order.setOrderDate(resultSet.getDate(4));
+				order.setStatus(resultSet.getString(5));
+				order.setAmount(resultSet.getInt(6));
+				orderList.add(order);
+			}
+		} catch (ConnectionPoolException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					// logging ERROR
+				}
+			}
+			try {
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return orderList;
+	}
+
+	@SuppressWarnings("resource")
+	@Override
+	public void cancelOrder(int idOrder) throws DAOException {
+		Connection connection = null;
+		PreparedStatement statement = null;
+		try {
+			connection = ConnectionPool.getInstance().takeConnection();
+			statement = connection.prepareStatement(CANCEL1_ORDER_SQL);
+			statement.setInt(1, idOrder);
+			statement.executeUpdate();
+			statement = connection.prepareStatement(CANCEL2_ORDER_SQL);
+			statement.setInt(1, idOrder);
+			statement.executeUpdate();
+		} catch (ConnectionPoolException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					// logging ERROR
+				}
+			}
+			try {
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
 	}
 }

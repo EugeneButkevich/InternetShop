@@ -14,11 +14,11 @@ public class ShowInformationAboutProductCommand implements ICommand {
 
 		boolean result = false;
 		String page = null;
+		
 		result = ShowInformationAboutProductService.getInstance().doService(request);
 		if (result) {
 			page = JspPageName.SINGLE_PRODUCT_PAGE;
 		}
-		System.out.println("page="+page);
 		return page;
 	}
 }

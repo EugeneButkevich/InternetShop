@@ -17,5 +17,7 @@ public class JspPageName {
 	public static final String Add_NEW_PRODUCT_PAGE = "WEB-INF/jsp/addProductPage.jsp";
 	public static final String EDIT_PRODUCT_PAGE = "WEB-INF/jsp/editProductPage.jsp";
 	public static final String SUCCESSFUL_ORDER_PAGE = "WEB-INF/jsp/successfulOrderPage.jsp";
+	public static final String SHOPPING_CART_PAGE = "WEB-INF/jsp/shoppingCartPage.jsp";
+	
 
 }

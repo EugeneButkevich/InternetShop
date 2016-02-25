@@ -28,10 +28,6 @@ public class Controller extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		request.setCharacterEncoding("UTF-8");
-		if (request.getSession().isNew()) {
-			System.out.println("Новая сессия");
-		}
 		String commandName = request.getParameter(RequestParameterName.COMMAND_NAME);
 		System.out.println("commandName=" + commandName);
 		ICommand command = ControllerHelper.getInstance().getCommand(commandName);

@@ -10,7 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
-public class MyFilter implements Filter {
+public class CurrentFilter implements Filter {
 
 	private ServletContext context;
 
@@ -18,14 +18,19 @@ public class MyFilter implements Filter {
 	public void init(FilterConfig fConfig) throws ServletException {
 		this.context = fConfig.getServletContext();
 		this.context.log("MyFilter initialized");
+		System.out.println("Фильтр инициализировали");
 	}
 
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
 			throws IOException, ServletException {
-/*		HttpServletResponse httpRepsonse = (HttpServletResponse) response;
-	    httpRepsonse.sendRedirect("controller");
-		RecordAllCategoriesInSession.getInstanse().doService((HttpServletRequest)request);*/
+		String encoding = request.getCharacterEncoding();
+
+		if (!"UTF-8".equalsIgnoreCase(encoding)) {
+			response.setCharacterEncoding("UTF-8");
+		}
+
+		filterChain.doFilter(request, response);
 	}
 
 	@Override

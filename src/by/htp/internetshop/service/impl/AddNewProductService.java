@@ -31,14 +31,14 @@ public class AddNewProductService implements IService {
 		product.setIdCategory(Integer.parseInt(idCategory));
 
 		nameProduct = request.getParameter(RequestParameterName.NAME_PRODUCT);
-		if (nameProduct == "") {
+		if (nameProduct.equals("")) {
 			request.setAttribute(RequestParameterName.ERROR_ADD_OR_EDIT_PRODUCT, 1);
 			return false;
 		}
 		product.setName(nameProduct);
 
 		costOfProduct = request.getParameter(RequestParameterName.COST_PRODUCT);
-		if (costOfProduct == "") {
+		if (costOfProduct.equals("")) {
 			request.setAttribute(RequestParameterName.ERROR_ADD_OR_EDIT_PRODUCT, 2);
 			return false;
 		}
@@ -53,8 +53,8 @@ public class AddNewProductService implements IService {
 			return false;
 		}
 
-		quantityOfProduct = request.getParameter(RequestParameterName.QUANTITY_OF_PRODUCT);
-		if (quantityOfProduct == "") {
+		quantityOfProduct = request.getParameter(RequestParameterName.QUANTITY_OF_PRODUCTS);
+		if (quantityOfProduct.equals("")) {
 			product.setQuantityInStock(0);
 		} else {
 			try {

@@ -14,7 +14,6 @@ public class RegistrationCommand implements ICommand {
 		String page = null;
 		boolean result = RegistrationService.getInstance().doService(request);
 
-		System.out.println("Итоговый result ="+result);
 		if (result) {
 			page = JspPageName.SUCCESSFUL_REGISTRATION_PAGE;
 		} else {

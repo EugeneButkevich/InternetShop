@@ -22,7 +22,7 @@ public class RequestParameterName {
 	public static final String NAME_PRODUCT = "name_product";
 	public static final String ERROR_ADD_OR_EDIT_PRODUCT = "errorAddOrEditProduct";
 	public static final String COST_PRODUCT = "cost_product";
-	public static final String QUANTITY_OF_PRODUCT = "quantity";
+	public static final String QUANTITY_OF_PRODUCTS = "quantity";
 	public static final String ID_CLIENT = "id_client";
 	public static final String ADMIN = "admin";
 	public static final String ERROR_AUTHORIZATION = "errorAuthorization";
@@ -33,5 +33,9 @@ public class RequestParameterName {
 	public static final String ERROR_ORDER = "errorOrder";
 	public static final String ALL_CATEGORIES = "allCategories";
 	public static final String CLIENTS = "clients";
+	public static final String ALL_ORDERS_OF_ONE_CLIENT = "orders";
+	public static final String ID_ORDER = "id_order";
+	public static final String QUANTITY_OF_PRODUCTS_IN_ORDER = "quantity_of_products_in_order";
+	public static final String QUANTITY_OF_PRODUCTS_IN_STOCK = "quantity_of_products_in_stock";
 
 }

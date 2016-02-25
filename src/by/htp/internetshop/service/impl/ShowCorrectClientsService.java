@@ -24,6 +24,11 @@ public class ShowCorrectClientsService implements IService {
 
 		ClientDAO clientDAO = DAOFactory.getInstance().getClientDAO();
 		List<Client> clientList = null;
+		
+		if (request.getSession(false).getAttribute(RequestParameterName.ADMIN) == null) {
+			return false;
+		}
+		
 		try {
 			clientList = clientDAO.getClientsThatAreNotIncludedInBlacklist();
 		} catch (DAOException e) {

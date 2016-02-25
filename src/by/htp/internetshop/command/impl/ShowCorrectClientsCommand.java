@@ -12,7 +12,14 @@ public class ShowCorrectClientsCommand implements ICommand {
 	@Override
 	public String execute(HttpServletRequest request) throws CommandException {
 
-		ShowCorrectClientsService.getInstance().doService(request);
-		return JspPageName.ALL_CLIENTS_PAGE;
+		boolean result = false;
+		String page = null;
+
+		result = ShowCorrectClientsService.getInstance().doService(request);
+
+		if (result) {
+			page = JspPageName.ALL_CLIENTS_PAGE;
+		}
+		return page;
 	}
 }

@@ -62,9 +62,8 @@ public class OrderService implements IService {
 					request.setAttribute(RequestParameterName.ERROR_ORDER, 4);
 					return false;
 				}
-				orderDAO.getOrder(client, product, Integer.parseInt(numberOfInstances));
-				productDAO.updateQuantityOfProductsInStock(product,
-						product.getQuantityInStock() - Integer.parseInt(numberOfInstances));
+				orderDAO.addOrder(client, product, Integer.parseInt(numberOfInstances));
+				productDAO.updateQuantityOfProductsInStock(product.getId(), product.getQuantityInStock() - Integer.parseInt(numberOfInstances));
 				result = true;
 			} catch (DAOException e) {
 				e.printStackTrace();

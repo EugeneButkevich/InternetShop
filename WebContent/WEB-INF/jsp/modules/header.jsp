@@ -11,7 +11,6 @@
 <fmt:message bundle="${loc}" key="local.logOut" var="logOut" />
 <fmt:message bundle="${loc}" key="local.greeting" var="greeting" />
 <fmt:message bundle="${loc}" key="local.myShoppingCart" var="myShoppingCart" />
-
 <fmt:message bundle="${loc}" key="local.authorization" var="authorization" />
 <fmt:message bundle="${loc}" key="local.isRegistered" var="isRegistered" />
 <fmt:message bundle="${loc}" key="local.signUp" var="signUp" />
@@ -20,7 +19,7 @@
 <body>
 
 	<jsp:include page="localization.jsp" />
-	
+
 	<c:choose>
 		<c:when test="${sessionScope.admin!=null}">
 			<p align="right">${greeting}
@@ -34,8 +33,8 @@
 		</c:when>
 		<c:when test="${sessionScope.client!=null}">
 			<p align="right">${greeting}
-				<c:out value="${sessionScope.client.login}!"></c:out> <br />
-				<a href="controller?command=show_my_orders"> ${myShoppingCart} </a> <br />
+				<c:out value="${sessionScope.client.login}!"></c:out> <br /> 
+				<a href="controller?command=show_orders&id_client=${client.id}"> ${myShoppingCart} </a> <br />
 			<form action="controller" method="post">
 				<input type="hidden" name="command" value="log_out" />
 				<p align="right">

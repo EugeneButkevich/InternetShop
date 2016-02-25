@@ -5,12 +5,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import by.htp.internetshop.dao.DAOException;
 import by.htp.internetshop.dao.ProductDAO;
 import by.htp.internetshop.dao.impl.connectionpool.ConnectionPool;
 import by.htp.internetshop.dao.impl.connectionpool.ConnectionPoolException;
+import by.htp.internetshop.domain.Order;
 import by.htp.internetshop.domain.Product;
 import by.htp.internetshop.domain.ProductCategory;
 
@@ -24,6 +27,7 @@ public class SQLProductDAO implements ProductDAO {
 	private static final String EDIT_PRODUCT_SQL = "UPDATE product SET name=?, price=?, quantityInStock=? WHERE id_product=?";
 	private static final String REMOVE_PRODUCT_SQL = "DELETE FROM product WHERE id_product=?";
 	private static final String UPDATE_QUANTITY_OF_PRODUCTS_IN_STOCK_SQL = "UPDATE product SET quantityInStock=? WHERE id_product=?";
+	private static final String GET_PRODUCT_OF_ORDER_SQL = "SELECT * FROM product WHERE id_product IN (SELECT id_product FROM order_has_product WHERE id_order=?)";
 
 	private static final SQLProductDAO instance = new SQLProductDAO();
 
@@ -302,14 +306,14 @@ public class SQLProductDAO implements ProductDAO {
 	}
 
 	@Override
-	public void updateQuantityOfProductsInStock(Product product, int newValueOfQuantity) throws DAOException {
+	public void updateQuantityOfProductsInStock(int idProduct, int newValueOfQuantity) throws DAOException {
 		Connection connection = null;
 		PreparedStatement statement = null;
 		try {
 			connection = ConnectionPool.getInstance().takeConnection();
 			statement = connection.prepareStatement(UPDATE_QUANTITY_OF_PRODUCTS_IN_STOCK_SQL);
 			statement.setInt(1, newValueOfQuantity);
-			statement.setInt(2, product.getId());
+			statement.setInt(2, idProduct);
 			statement.executeUpdate();
 		} catch (ConnectionPoolException e) {
 			e.printStackTrace();
@@ -332,5 +336,60 @@ public class SQLProductDAO implements ProductDAO {
 				e.printStackTrace();
 			}
 		}
+	}
+
+
+	@Override
+	public Map<Integer, List<Object>> getDataOfAllOrdersOfOneClient(List<Order> orderList) throws DAOException {
+		Map<Integer, List<Object>> allOrdersOfOneClient = new HashMap<Integer, List<Object>>();
+		int quantityOfProductsInOrder = 0;
+		List<Object> dataOfOrdersOfOneClient = null;
+		Product product = null;
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+
+		try {
+			connection = ConnectionPool.getInstance().takeConnection();
+			statement = connection.prepareStatement(GET_PRODUCT_OF_ORDER_SQL);
+			for (Order order : orderList) {
+				statement.setInt(1, order.getIdOrder());
+				resultSet = statement.executeQuery();
+				product = new Product();
+				dataOfOrdersOfOneClient = new ArrayList<>();
+				while (resultSet.next()) {
+					product.setId(resultSet.getInt(1));
+					product.setIdCategory(resultSet.getInt(2));
+					product.setName(resultSet.getString(3));
+					product.setPrice(resultSet.getInt(4));
+					product.setQuantityInStock(resultSet.getInt(5));
+					dataOfOrdersOfOneClient.add(product);
+					dataOfOrdersOfOneClient.add(order.getAmount());
+					quantityOfProductsInOrder = order.getAmount()/product.getPrice();
+					dataOfOrdersOfOneClient.add(quantityOfProductsInOrder);
+					allOrdersOfOneClient.put(order.getIdOrder(), dataOfOrdersOfOneClient);
+				}
+			}
+		} catch (ConnectionPoolException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					// logging ERROR
+				}
+			}
+			try {
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return allOrdersOfOneClient;
 	}
 }

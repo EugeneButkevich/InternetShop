@@ -25,6 +25,10 @@ public class ShowBlacklistService implements IService {
 		ClientDAO clientDAO = DAOFactory.getInstance().getClientDAO();
 		List<Client> clientList = null;
 
+		if (request.getSession(false).getAttribute(RequestParameterName.ADMIN) == null) {
+			return false;
+		}
+
 		try {
 			clientList = clientDAO.getBlacklist();
 		} catch (DAOException e) {

@@ -5,9 +5,9 @@ import javax.servlet.http.HttpServletRequest;
 import by.htp.internetshop.command.CommandException;
 import by.htp.internetshop.command.ICommand;
 import by.htp.internetshop.controller.JspPageName;
-import by.htp.internetshop.service.impl.ShowBlacklistService;
+import by.htp.internetshop.service.impl.ShowOrdersOfOneClientService;
 
-public class ShowBlacklistCommand implements ICommand {
+public class ShowOrdersOfOneClientCommand implements ICommand {
 
 	@Override
 	public String execute(HttpServletRequest request) throws CommandException {
@@ -15,12 +15,10 @@ public class ShowBlacklistCommand implements ICommand {
 		boolean result = false;
 		String page = null;
 
-		result = ShowBlacklistService.getInstance().doService(request);
-
+		result = ShowOrdersOfOneClientService.getInstance().doService(request);
 		if (result) {
-			page = JspPageName.BLACKLIST_PAGE;
+			page = JspPageName.SHOPPING_CART_PAGE;
 		}
 		return page;
 	}
-
 }

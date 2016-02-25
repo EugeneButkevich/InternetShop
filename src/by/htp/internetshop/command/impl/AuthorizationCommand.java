@@ -22,9 +22,9 @@ public class AuthorizationCommand implements ICommand {
 			AuthorizationService authorization = AuthorizationService.getInstance();
 			result = authorization.doService(request);
 			if (result) {
-				if (request.getSession(true).getAttribute("admin") != null) {
+				if (request.getSession(true).getAttribute(RequestParameterName.ADMIN) != null) {
 					page = JspPageName.ADMIN_PAGE;
-				} else if (request.getSession(true).getAttribute("client") != null) {
+				} else if (request.getSession(true).getAttribute(RequestParameterName.CLIENT) != null) {
 					page = JspPageName.MAIN_PAGE;
 				}
 			} else {

@@ -13,6 +13,17 @@
 		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
 
+	<filter>
+		<display-name>currentFilter</display-name>
+		<filter-name>currentFilter</filter-name>
+		<filter-class>by.htp.internetshop.dao.filter.CurrentFilter</filter-class>
+	</filter>
+	
+  	<filter-mapping>
+		<filter-name>currentFilter</filter-name>
+		<servlet-name>controller</servlet-name>
+	</filter-mapping>
+	
 	<servlet>
 		<servlet-name>controller</servlet-name>
 		<servlet-class>by.htp.internetshop.controller.Controller</servlet-class>
@@ -22,13 +33,6 @@
 		<servlet-name>controller</servlet-name>
 		<url-pattern>/controller</url-pattern>
 	</servlet-mapping>
-
-	<filter>
-		<display-name>MyFilter</display-name>
-		<filter-name>MyFilter</filter-name>
-		<filter-class>by.htp.internetshop.dao.filter.MyFilter</filter-class>
-	</filter>
-
 
 	<listener>
 		<listener-class>by.htp.internetshop.listener.InitConnections</listener-class>

@@ -32,7 +32,8 @@ public class RegistrationService implements IService {
 		String phone;
 		String address;
 		String email;
-		boolean result = true;
+		boolean result = false;
+		
 		login = request.getParameter(RequestParameterName.LOGIN);
 		password = request.getParameter(RequestParameterName.PASSWORD);
 		passwordAgain = request.getParameter(RequestParameterName.PASSWORD_AGAIN);
@@ -47,36 +48,36 @@ public class RegistrationService implements IService {
 
 		if (!password.equals(passwordAgain)) {
 			request.setAttribute(RequestParameterName.ERROR_REGISTRATION, 1);
-			result = false;
+			return false;
 		}
 
 		try {
 			if (!clientDAO.checkUniquenessOfLogin(login)) {
 				request.setAttribute(RequestParameterName.ERROR_REGISTRATION, 2);
-				result = false;
+				return false;
 			}
 		} catch (DAOException e1) {
 			e1.printStackTrace();
 		}
 
-		if ((login == "") || (password == "") || (surname == "") || (name == "") || (phone == "")) {
+		if ((login.equals("")) || (password.equals("")) || (surname.equals("")) || (name.equals(""))
+				|| (phone.equals(""))) {
 			request.setAttribute(RequestParameterName.ERROR_REGISTRATION, 3);
-			result = false;
+			return false;
 		}
 
 		Pattern p = Pattern.compile("[\\d\\s()\\-\\+]+");
 		Matcher matcher = p.matcher(phone);
 		if (!matcher.matches()) {
 			request.setAttribute(RequestParameterName.ERROR_REGISTRATION, 4);
-			result = false;
+			return false;
 		}
 
-		if (result) {
-			try {
-				clientDAO.registration(login, password, surname, name, registrationDate, phone, address, email);
-			} catch (DAOException e) {
-				e.printStackTrace();
-			}
+		try {
+			clientDAO.registration(login, password, surname, name, registrationDate, phone, address, email);
+			result = true;
+		} catch (DAOException e) {
+			e.printStackTrace();
 		}
 		return result;
 	}

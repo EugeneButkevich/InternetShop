@@ -9,7 +9,7 @@ import by.htp.internetshop.command.impl.AddNewCategoryProductCommand;
 import by.htp.internetshop.command.impl.AddNewPoductCommand;
 import by.htp.internetshop.command.impl.AddToBlacklistCommand;
 import by.htp.internetshop.command.impl.AuthorizationCommand;
-import by.htp.internetshop.command.impl.CancelTheOrderCommand;
+import by.htp.internetshop.command.impl.CancelOrderCommand;
 import by.htp.internetshop.command.impl.EditProductCommand;
 import by.htp.internetshop.command.impl.GoAddProductCommand;
 import by.htp.internetshop.command.impl.GoEditProductCommand;
@@ -23,6 +23,7 @@ import by.htp.internetshop.command.impl.RemoveProductCommand;
 import by.htp.internetshop.command.impl.ShowBlacklistCommand;
 import by.htp.internetshop.command.impl.ShowCorrectClientsCommand;
 import by.htp.internetshop.command.impl.ShowInformationAboutProductCommand;
+import by.htp.internetshop.command.impl.ShowOrdersOfOneClientCommand;
 
 public final class ControllerHelper {
 
@@ -40,7 +41,7 @@ public final class ControllerHelper {
 		commands.put(CommandName.REMOVE_FROM_BLACKLIST, new RemoveFromBlacklistCommand());
 		commands.put(CommandName.EDIT_PRODUCT, new EditProductCommand());
 		commands.put(CommandName.REMOVE_PRODUCT, new RemoveProductCommand());
-		commands.put(CommandName.CANCEL_THE_ORDER, new CancelTheOrderCommand());
+		commands.put(CommandName.CANCEL_ORDER, new CancelOrderCommand());
 		commands.put(CommandName.LOG_OUT, new LogOutCommand());
 		commands.put(CommandName.CHOOSE_LANGUAGE, new LanguageCommand());
 		commands.put(CommandName.SHOW_CORRECT_CLIENTS, new ShowCorrectClientsCommand());
@@ -48,6 +49,7 @@ public final class ControllerHelper {
 		commands.put(CommandName.SHOW_INFORMATION_ABOUT_PRODUCT, new ShowInformationAboutProductCommand());
 		commands.put(CommandName.GO_ADD_PRODUCT, new GoAddProductCommand());
 		commands.put(CommandName.GO_EDIT_PRODUCT, new GoEditProductCommand());
+		commands.put(CommandName.SHOW_ORDERS, new ShowOrdersOfOneClientCommand());
 		commands.put(CommandName.NO_SUCH_COMMAND, new NoSuchCommand());
 		System.out.println("Инициализировали controllerHelper");
 	}
