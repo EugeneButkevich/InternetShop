@@ -7,6 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="css/main.css" media="all">
 <title>Страница с продуктами</title>
 <fmt:setLocale value="${sessionScope.local}" />
 <fmt:setBundle basename="localization.local" var="loc" />
@@ -19,9 +20,6 @@
 </head>
 <body>
 
-	<%-- 	<jsp:useBean id="category" class="by.htp.internetshop.domain.ProductCategory"
-		scope="request" /> --%>
-
 	<c:if test="${sessionScope.errorAddCategory==1}">
 		<font color="#CC0000"> ${errorAddCategory} </font>
 		<c:set var="errorAddCategory" value="0" scope="session" />
@@ -31,7 +29,7 @@
 		<table width="50%" cellpadding="0">
 			<c:forEach items="${applicationScope.allCategories}" var="category_i">
 				<tr>
-					<td><font size="+2"><c:out value="${category_i.name}"/></font></td>
+					<td><h2><c:out value="${category_i.name}"/></h2></td>
 					<td><mytag:getproducts category="${category_i}" /></td>
 				</tr>
 			</c:forEach>
@@ -42,7 +40,7 @@
 		<table width="50%">
 			<c:forEach items="${applicationScope.allCategories}" var="category_i">
 				<tr>
-					<td><font size="+2"><c:out value="${category_i.name}" /></font></td>
+					<td><h2><c:out value="${category_i.name}" /></h2></td>
 					<td><mytag:getproductsforadmin category="${category_i}" nameedit="${nameOfOperation1}" 
 					namedelete="${nameOfOperation2}" nameadd="${nameOfOperation3}" /></td>
 				</tr>
@@ -51,7 +49,7 @@
 		<form action="controller" method="post">
 			<input type="hidden" name="command" value="add_new_category_product" />
 			<input type="text" name="name_category" value="" title="${addCategory1}"/> 
-			<input type="submit" value="${addCategory2}" />
+			<input type="submit" value="${addCategory2}" class="button2"/>
 		</form>
 	</c:if>
 </body>

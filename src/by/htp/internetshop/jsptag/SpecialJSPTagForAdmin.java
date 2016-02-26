@@ -74,14 +74,14 @@ public class SpecialJSPTagForAdmin extends TagSupport {
 				out.write("<form action=\"controller\" method=\"post\">");
 				out.write("<input type=\"hidden\" name=\"command\" value=\"go_edit_product\" />");
 				out.write("<input type=\"hidden\" name=\"id_product\" value=\"" + product.getId() + "\" />");
-				out.write("<input type=\"submit\" value=\"" + nameedit + "\" />");
+				out.write("<input type=\"submit\" value=\"" + nameedit + "\" class=\"button2\" />");
 				out.write("</form>");
 				out.write("</td>");
 				out.write("<td>");
 				out.write("<form action=\"controller\" method=\"post\">");
 				out.write("<input type=\"hidden\" name=\"command\" value=\"remove_product\" />");
 				out.write("<input type=\"hidden\" name=\"id_product\" value=\"" + product.getId() + "\" />");
-				out.write("<input type=\"submit\" value=\"" + namedelete + "\" />");
+				out.write("<input type=\"submit\" value=\"" + namedelete + "\" class=\"button2\"/>");
 				out.write("</form>");
 				out.write("</td>");
 				out.write("</tr>");
@@ -91,7 +91,7 @@ public class SpecialJSPTagForAdmin extends TagSupport {
 			out.write("<form action=\"controller\" method=\"post\">");
 			out.write("<input type=\"hidden\" name=\"command\" value=\"go_add_product\" />");
 			out.write("<input type=\"hidden\" name=\"id_category\" value=\"" + category.getId() + "\" />");
-			out.write("<small><input type=\"submit\" value=\"" + nameadd + "\" /></small>");
+			out.write("<small><input type=\"submit\" value=\"" + nameadd + "\" class=\"button2\" /></small>");
 			out.write("</form>");
 			out.write("</td>");
 			out.write("</tr>");

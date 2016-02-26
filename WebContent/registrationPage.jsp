@@ -6,6 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="css/main.css" media="all">
 <title>Страница регистрации</title>
 
 <fmt:setLocale value="${sessionScope.local}" />
@@ -30,7 +31,7 @@
 <fmt:message bundle="${loc}" key="local.signUp" var="signUp" />
 </head>
 <body>
-	<jsp:include page="WEB-INF/jsp/modules/localization.jsp" />
+	<jsp:include page="WEB-INF/jsp/modules/header.jsp" />
 
 	<h1>${titleRegistration}</h1>
 
@@ -52,7 +53,7 @@
 	
 	<form action="controller" method="post">
 		<input type="hidden" name="command" value="registration" />
-		<table>
+		<table class="table2">
 			<tr>
 				<td>${login}*:</td>
 				<td><input type="text" name="login" value="" /></td>
@@ -87,8 +88,8 @@
 			</tr>
 		</table>
 		<small>${noteRegistration1}</small> <br /> ${noteRegistration2} <a
-			href="rules.jsp"> ${noteRegistration3} </a> <br /> <input
-			type="submit" value="${signUp}" /> <br />
+			href="rules.jsp"> ${noteRegistration3} </a> <br /> 
+			<input type="submit" value="${signUp}" class="button1"/> <br />
 	</form>
 </body>
 </html>

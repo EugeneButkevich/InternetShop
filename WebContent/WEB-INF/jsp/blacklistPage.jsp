@@ -6,6 +6,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="css/main.css" media="all">
+<link rel="stylesheet" type="text/css" href="css/forpulsatingbuttons.css" media="all">
 <title>Черный список</title>
 <fmt:setLocale value="${sessionScope.local}" />
 <fmt:setBundle basename="localization.local" var="loc" />
@@ -23,21 +25,23 @@
 	<h1>${blacklist}</h1>
 
 	<c:if test="${sessionScope.clients != null}">
-		<table border="1px" cellspacing="0">
-			<tr>
-				<th>${idOfClient}</th>
-				<th>${loginOfClient}</th>
-				<th>${removeFromBlacklist1}</th>
-			</tr>
+		<table class="table1">
+			<thead>
+				<tr>
+					<td>${idOfClient}</td>
+					<td>${loginOfClient}</td>
+					<td>${removeFromBlacklist1}</td>
+				</tr>
+			</thead>
 			<c:forEach items="${sessionScope.clients}" var="client">
 				<tr>
-					<td><c:out value="${client.id}" /></td>
-					<td><c:out value="${client.login}" /></td>
-					<td align="center">
+					<td class="grey"><c:out value="${client.id}" /></td>
+					<td class="grey"><c:out value="${client.login}" /></td>
+					<td class="grey" align="center">
 						<form action="controller" method="post">
 							<input type="hidden" name="command" value="remove_from_blacklist" />
 							<input type="hidden" name="id_client" value="${client.id}" /> 
-							<input type="submit" value="${removeFromBlacklist2}!" />
+							<input type="submit" value="${removeFromBlacklist2}!" class="button3" />
 						</form>
 					</td>
 				</tr>

@@ -6,6 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="css/main.css" media="all">
 <title>Корзина</title>
 <fmt:setLocale value="${sessionScope.local}" />
 <fmt:setBundle basename="localization.local" var="loc" />
@@ -30,7 +31,7 @@
 		<c:forEach items="${orders}" var="order">
 			<tr>
 				<td>
-					<font size="+2">
+					<font size="+1">
  						<a href="controller?command=show_information_about_product&id_product=${order.value[0].id}">${order.value[0].name}</a>
 					</font>
 				</td>
@@ -44,7 +45,7 @@
 						<input type="hidden" name="id_product" value="${order.value[0].id}" /> 
 						<input type="hidden" name="quantity_of_products_in_order" value="${order.value[2]}" /> 
 						<input type="hidden" name="quantity_of_products_in_stock" value="${order.value[0].quantityInStock}" />
-						<input type="submit" value="${cancelOrder}!" />
+						<input type="submit" value="${cancelOrder}!" class="button1" />
 					</form>
 				</td>
 			</tr>

@@ -13,6 +13,7 @@ import by.htp.internetshop.command.impl.CancelOrderCommand;
 import by.htp.internetshop.command.impl.EditProductCommand;
 import by.htp.internetshop.command.impl.GoAddProductCommand;
 import by.htp.internetshop.command.impl.GoEditProductCommand;
+import by.htp.internetshop.command.impl.GoToAdminPageCommand;
 import by.htp.internetshop.command.impl.LanguageCommand;
 import by.htp.internetshop.command.impl.LogOutCommand;
 import by.htp.internetshop.command.impl.NoSuchCommand;
@@ -50,6 +51,7 @@ public final class ControllerHelper {
 		commands.put(CommandName.GO_ADD_PRODUCT, new GoAddProductCommand());
 		commands.put(CommandName.GO_EDIT_PRODUCT, new GoEditProductCommand());
 		commands.put(CommandName.SHOW_ORDERS, new ShowOrdersOfOneClientCommand());
+		commands.put(CommandName.GO_TO_ADMIN_PAGE, new GoToAdminPageCommand());
 		commands.put(CommandName.NO_SUCH_COMMAND, new NoSuchCommand());
 		System.out.println("Инициализировали controllerHelper");
 	}

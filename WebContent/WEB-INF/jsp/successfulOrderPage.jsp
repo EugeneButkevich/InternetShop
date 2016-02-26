@@ -6,6 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="css/main.css" media="all">
 <title>Подтвеждение успешности заказа</title>
 
 <fmt:setLocale value="${sessionScope.local}" />
@@ -17,7 +18,7 @@
 
 <jsp:include page="modules/header.jsp" />
 
-<font size="+3"><c:out value="${gratitudeForPurchase}" /></font>
+<h1><c:out value="${gratitudeForPurchase}" /></h1>
 
 <p>
 	${messageAboutReturn1} <a href="index.jsp">${messageAboutReturn2}</a>

@@ -6,6 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="css/main.css" media="all">
 <title>Страница продукта</title>
 <fmt:setLocale value="${sessionScope.local}" />
 <fmt:setBundle basename="localization.local" var="loc" />
@@ -27,7 +28,7 @@
 	<jsp:setProperty property="*" name="product" />
 
 	<h1><jsp:getProperty property="name" name="product" /></h1>
-	
+	 
 	<c:if test="${requestScope.errorOrder==1}">
 		<font color="#CC0000"> ${errorOrder1} </font>
 	</c:if>
@@ -44,7 +45,7 @@
 		<font color="#CC0000"> ${errorOrder4} </font>
 	</c:if>
 	
-	<table>
+	<table class="table2">
 		<tr>
 			<td>${idNumberOfProduct}:</td>
 			<td><jsp:getProperty property="id" name="product" /></td>
@@ -67,7 +68,7 @@
 						<input type="hidden" name="id_client" value="${client.id}" /> 
 						<input type="hidden" name="id_product" value="${product.id}" />
 						${quantityMessage3}: 
-						<input type="text" name="number_of_instances" value="" size="1" /> 
+						<input type="text" name="number_of_instances" value="" class="input1"/> 
 						<input type="submit" value="${orderMessage}" />
 					</form>
 				</c:if>

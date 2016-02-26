@@ -6,6 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="css/main.css" media="all">
 <title>Страница редактирования продукта</title>
 <fmt:setLocale value="${sessionScope.local}" />
 <fmt:setBundle basename="localization.local" var="loc" />
@@ -61,7 +62,7 @@
 
 	<form action="controller" method="post">
 		<input type="hidden" name="command" value="edit_product" />
-		<table width="50%">
+		<table class="table2">
 			<tr>
 				<td>${idNumberOfCategory}:</td>
 				<td><input type="text" readonly="readonly" name="id_category" value="${requestScope.product.idCategory}" /></td>

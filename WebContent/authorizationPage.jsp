@@ -6,6 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="css/main.css" media="all">
 <title>Страница авторизации</title>
 
 <fmt:setLocale value="${sessionScope.local}" />
@@ -20,7 +21,7 @@
 </head>
 
 <body>
-	<jsp:include page="WEB-INF/jsp/modules/localization.jsp" />
+	<jsp:include page="WEB-INF/jsp/modules/header.jsp" />
 
 	<c:if test="${sessionScope.errorAuthorization==1}">
 		<font color="#CC0000"> ${errorMessageAuthorization1} </font>
@@ -34,7 +35,7 @@
 	
 	<form action="controller" method="post">
 		<input type="hidden" name="command" value="authorization" />
-		<table>
+		<table class="table2">
 			<tr>
 				<td>${login}:</td>
 				<td><input type="text" name="login" value="" /></td>
@@ -43,11 +44,18 @@
 				<td>${password}:</td>
 				<td><input type="text" name="password" value="" /></td>
 			</tr>
+			<tr>
+				<td></td>
+				<td align="center">
+				 	<input type="submit" class="button1" value="${entry}"/> <br />
+				 </td>
+			</tr>
 		</table>
-		<input type="submit" value="${entry}" /> <br />
 	</form>
 
-	${isRegistered}
-	<a href="registrationPage.jsp"> ${signUp} </a>
+	<p>
+		${isRegistered}
+		<a href="registrationPage.jsp"> ${signUp} </a>
+	</p>
 </body>
 </html>

@@ -6,6 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="css/main.css" media="all">
 <fmt:setLocale value="${sessionScope.local}" />
 <fmt:setBundle basename="localization.local" var="loc" />
 <fmt:message bundle="${loc}" key="local.locbutton.name.ru" var="ru_button" />
@@ -15,12 +16,10 @@
 <body>
 	<form action="controller" method="post">
 		<input type="hidden" name="command" value="choose_language" />
-		<div>
-			<p align="right">
-				<button type="submit" name="local" value="en">${en_button}</button>
-				<button type="submit" name="local" value="ru">${ru_button}</button>
-			</p>
-		</div>
+		<p align="right">
+			<button type="submit" name="local" value="en" class="button2">${en_button}</button>
+			<button type="submit" name="local" value="ru" class="button2">${ru_button}</button>
+		</p>
 	</form>
 </body>
 </html>

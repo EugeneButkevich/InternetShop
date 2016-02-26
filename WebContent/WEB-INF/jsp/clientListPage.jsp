@@ -6,10 +6,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="css/main.css" media="all">
+<link rel="stylesheet" type="text/css" href="css/forpulsatingbuttons.css" media="all">
 <title>Список клиентов</title>
 <fmt:setLocale value="${sessionScope.local}" />
 <fmt:setBundle basename="localization.local" var="loc" />
-<fmt:message bundle="${loc}" key="local.listOfClients" var="listOfClients" />
+<fmt:message bundle="${loc}" key="local.listOfClients"
+	var="listOfClients" />
 <fmt:message bundle="${loc}" key="local.idOfClient" var="idOfClient" />
 <fmt:message bundle="${loc}" key="local.loginOfCLient" var="loginOfClient" />
 <fmt:message bundle="${loc}" key="local.addToBlacklist1" var="addToBlacklist1" />
@@ -22,21 +25,23 @@
 	<h1>${listOfClients}</h1>
 
 	<c:if test="${sessionScope.clients != null}">
-		<table border="1px" cellspacing="0">
-			<tr>
-				<th>${idOfClient}</th>
-				<th>${loginOfClient}</th>
-				<th>${addToBlacklist1}</th>
-			</tr>
+		<table class="table1">
+			<thead>
+				<tr>
+					<td>${idOfClient}</td>
+					<td>${loginOfClient}</td>
+					<td>${addToBlacklist1}</td>
+				</tr>
+			</thead>
 			<c:forEach items="${sessionScope.clients}" var="client">
 				<tr>
-					<td><c:out value="${client.id}" /></td>
-					<td><c:out value="${client.login}" /></td>
-					<td align="center">
+					<td class="grey"><c:out value="${client.id}" /></td>
+					<td class="grey"><c:out value="${client.login}" /></td>
+					<td class="grey">
 						<form action="controller" method="post">
-							<input type="hidden" name="command" value="add_to_blacklist" /> 
+							<input type="hidden" name="command" value="add_to_blacklist" />
 							<input type="hidden" name="id_client" value="${client.id}" /> 
-							<input type="submit" value="${addToBlacklist2}!" />
+							<input type="submit" value="${addToBlacklist2}!" class="button3" />
 						</form>
 					</td>
 				</tr>
