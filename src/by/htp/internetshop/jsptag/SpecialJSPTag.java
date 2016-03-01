@@ -7,6 +7,8 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
 
+import org.apache.log4j.Logger;
+
 import by.htp.internetshop.dao.DAOException;
 import by.htp.internetshop.dao.DAOFactory;
 import by.htp.internetshop.dao.ProductDAO;
@@ -17,6 +19,8 @@ public class SpecialJSPTag extends TagSupport {
 
 	private static final long serialVersionUID = 1L;
 	private ProductCategory category;
+	
+	private static final Logger logger = Logger.getLogger(SpecialJSPTag.class);
 
 	public ProductCategory getCategory() {
 		return category;
@@ -34,8 +38,8 @@ public class SpecialJSPTag extends TagSupport {
 		ProductDAO productDAO = DAOFactory.getInstance().getProductDAO();
 		try {
 			productList = productDAO.getProductsOfCategory(category.getId());
-		} catch (DAOException e1) {
-			e1.printStackTrace();
+		} catch (DAOException e) {
+			logger.error("ProductDAO didn't return products of category. Message: " + e.getMessage());
 		}
 		try {
 			for (Product product : productList) {
@@ -47,7 +51,7 @@ public class SpecialJSPTag extends TagSupport {
 				out.write("</tr>");
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error("Instance of JspWriter threw IOException. Message: " + e.getMessage());
 		}
 		return SKIP_BODY;
 	}

@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import by.htp.internetshop.dao.DAOException;
 import by.htp.internetshop.dao.OrderDAO;
 import by.htp.internetshop.dao.impl.connectionpool.ConnectionPool;
@@ -27,7 +29,9 @@ public class SQLOrderDAO implements OrderDAO {
 
 	private static final String INITIAL_ORDER_STATUS = "В процессе";
 
-	private final static SQLOrderDAO instance = new SQLOrderDAO();
+	private static final Logger logger = Logger.getLogger(SQLOrderDAO.class);
+
+	private static final SQLOrderDAO instance = new SQLOrderDAO();
 
 	public static SQLOrderDAO getInstance() {
 		return instance;
@@ -66,15 +70,15 @@ public class SQLOrderDAO implements OrderDAO {
 			statement.executeUpdate();
 
 		} catch (ConnectionPoolException e) {
-			e.printStackTrace();
+			logger.error("ConnectionPool didn't take connection. Message: " + e.getMessage());
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DAOException("SQLException in SQLOrderDAO");
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					// logging ERROR
+					logger.error("Statement didn't close. Message: " + e.getMessage());
 				}
 			}
 			try {
@@ -82,7 +86,7 @@ public class SQLOrderDAO implements OrderDAO {
 					connection.close();
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				logger.error("Connection didn't close. Message: " + e.getMessage());
 			}
 		}
 	}
@@ -112,15 +116,15 @@ public class SQLOrderDAO implements OrderDAO {
 				orderList.add(order);
 			}
 		} catch (ConnectionPoolException e) {
-			e.printStackTrace();
+			logger.error("ConnectionPool didn't take connection. Message: " + e.getMessage());
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DAOException("SQLException in SQLOrderDAO");
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					// logging ERROR
+					logger.error("Statement didn't close. Message: " + e.getMessage());
 				}
 			}
 			try {
@@ -128,7 +132,7 @@ public class SQLOrderDAO implements OrderDAO {
 					connection.close();
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				logger.error("Connection didn't close. Message: " + e.getMessage());
 			}
 		}
 		return orderList;
@@ -148,15 +152,15 @@ public class SQLOrderDAO implements OrderDAO {
 			statement.setInt(1, idOrder);
 			statement.executeUpdate();
 		} catch (ConnectionPoolException e) {
-			e.printStackTrace();
+			logger.error("ConnectionPool didn't take connection. Message: " + e.getMessage());
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DAOException("SQLException in SQLOrderDAO");
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					// logging ERROR
+					logger.error("Statement didn't close. Message: " + e.getMessage());
 				}
 			}
 			try {
@@ -164,7 +168,7 @@ public class SQLOrderDAO implements OrderDAO {
 					connection.close();
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				logger.error("Connection didn't close. Message: " + e.getMessage());
 			}
 		}
 

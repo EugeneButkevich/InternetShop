@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import by.htp.internetshop.dao.ClientDAO;
 import by.htp.internetshop.dao.DAOException;
 import by.htp.internetshop.dao.impl.connectionpool.ConnectionPool;
@@ -27,6 +29,8 @@ public class SQLClientDAO implements ClientDAO {
 	private static final String GET_BLACKLIST_SQL = "SELECT id_client, login, password, surname, name, registrationDate, phone, address, email FROM client WHERE id_client IN (SELECT id_client FROM blacklist)";
 	private static final String GET_ADDRESS_SQL = "SELECT address FROM client WHERE id_client=?";
 
+	Logger logger = Logger.getLogger(SQLClientDAO.class);
+
 	private final static SQLClientDAO instance = new SQLClientDAO();
 
 	public static ClientDAO getInstance() {
@@ -44,35 +48,33 @@ public class SQLClientDAO implements ClientDAO {
 			statement.setString(1, login);
 			statement.setString(2, password);
 			resultSet = statement.executeQuery();
-
 			return resultSet.next();
 
 		} catch (SQLException e) {
-			throw new DAOException("Error!");
+			throw new DAOException("SQLException in SQLClientDAO");
 		} catch (ConnectionPoolException e) {
-			e.printStackTrace();
+			logger.error("ConnectionPool didn't take connection. Message: " + e.getMessage());
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					// logging ERROR
+					logger.error("Statement didn't close. Message: " + e.getMessage());
 				}
 			}
-			// return connection into connection pool
 			try {
 				if (connection != null) {
 					connection.close();
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				logger.error("Connection didn't close. Message: " + e.getMessage());
 			}
 		}
 		return false;
 	}
 
 	@Override
-	public boolean thereIsClientInBlacklist(String login, String password) throws DAOException {
+	public boolean thereIsClientOnBlacklist(String login, String password) throws DAOException {
 
 		Connection connection = null;
 		PreparedStatement statement = null;
@@ -83,28 +85,26 @@ public class SQLClientDAO implements ClientDAO {
 			statement.setString(1, login);
 			statement.setString(2, password);
 			resultSet = statement.executeQuery();
-
 			return resultSet.next();
 
 		} catch (SQLException e) {
-			throw new DAOException("Error!");
+			throw new DAOException("SQLException in SQLClientDAO");
 		} catch (ConnectionPoolException e) {
-			e.printStackTrace();
+			logger.error("ConnectionPool didn't take connection. Message: " + e.getMessage());
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					// logging ERROR
+					logger.error("Statement didn't close. Message: " + e.getMessage());
 				}
 			}
-			// return connection into connection pool
 			try {
 				if (connection != null) {
 					connection.close();
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				logger.error("Connection didn't close. Message: " + e.getMessage());
 			}
 		}
 		return false;
@@ -137,24 +137,23 @@ public class SQLClientDAO implements ClientDAO {
 			}
 
 		} catch (ConnectionPoolException e) {
-			e.printStackTrace();
+			logger.error("ConnectionPool didn't take connection. Message: " + e.getMessage());
 		} catch (SQLException e) {
-			throw new DAOException("Error!");
+			throw new DAOException("SQLException in SQLClientDAO");
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					// logging ERROR
+					logger.error("Statement didn't close. Message: " + e.getMessage());
 				}
 			}
-			// return connection into connection pool
 			try {
 				if (connection != null) {
 					connection.close();
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				logger.error("Connection didn't close. Message: " + e.getMessage());
 			}
 		}
 		return client;
@@ -173,24 +172,23 @@ public class SQLClientDAO implements ClientDAO {
 			resultSet = statement.executeQuery();
 			return !resultSet.next();
 		} catch (ConnectionPoolException e) {
-			e.printStackTrace();
+			logger.error("ConnectionPool didn't take connection. Message: " + e.getMessage());
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DAOException("SQLException in SQLClientDAO");
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					// logging ERROR
+					logger.error("Statement didn't close. Message: " + e.getMessage());
 				}
 			}
-			// return connection into connection pool
 			try {
 				if (connection != null) {
 					connection.close();
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				logger.error("Connection didn't close. Message: " + e.getMessage());
 			}
 		}
 		return true;
@@ -215,24 +213,23 @@ public class SQLClientDAO implements ClientDAO {
 			statement.setString(8, email);
 			statement.executeUpdate();
 		} catch (ConnectionPoolException e) {
-			e.printStackTrace();
+			logger.error("ConnectionPool didn't take connection. Message: " + e.getMessage());
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DAOException("SQLException in SQLClientDAO");
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					// logging ERROR
+					logger.error("Statement didn't close. Message: " + e.getMessage());
 				}
 			}
-			// return connection into connection pool
 			try {
 				if (connection != null) {
 					connection.close();
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				logger.error("Connection didn't close. Message: " + e.getMessage());
 			}
 		}
 	}
@@ -250,24 +247,23 @@ public class SQLClientDAO implements ClientDAO {
 			statement.setDate(2, date_of_addition);
 			statement.executeUpdate();
 		} catch (ConnectionPoolException e) {
-			e.printStackTrace();
+			logger.error("ConnectionPool didn't take connection. Message: " + e.getMessage());
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DAOException("SQLException in SQLClientDAO");
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					// logging ERROR
+					logger.error("Statement didn't close. Message: " + e.getMessage());
 				}
 			}
-			// return connection into connection pool
 			try {
 				if (connection != null) {
 					connection.close();
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				logger.error("Connection didn't close. Message: " + e.getMessage());
 			}
 		}
 
@@ -284,24 +280,23 @@ public class SQLClientDAO implements ClientDAO {
 			statement.setInt(1, id_client);
 			statement.executeUpdate();
 		} catch (ConnectionPoolException e) {
-			e.printStackTrace();
+			logger.error("ConnectionPool didn't take connection. Message: " + e.getMessage());
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DAOException("SQLException in SQLClientDAO");
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					// logging ERROR
+					logger.error("Statement didn't close. Message: " + e.getMessage());
 				}
 			}
-			// return connection into connection pool
 			try {
 				if (connection != null) {
 					connection.close();
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				logger.error("Connection didn't close. Message: " + e.getMessage());
 			}
 		}
 	}
@@ -331,24 +326,23 @@ public class SQLClientDAO implements ClientDAO {
 				clientList.add(client);
 			}
 		} catch (ConnectionPoolException e) {
-			e.printStackTrace();
+			logger.error("ConnectionPool didn't take connection. Message: " + e.getMessage());
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DAOException("SQLException in SQLClientDAO");
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					// logging ERROR
+					logger.error("Statement didn't close. Message: " + e.getMessage());
 				}
 			}
-			// return connection into connection pool
 			try {
 				if (connection != null) {
 					connection.close();
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				logger.error("Connection didn't close. Message: " + e.getMessage());
 			}
 		}
 		return clientList;
@@ -380,24 +374,23 @@ public class SQLClientDAO implements ClientDAO {
 				clientList.add(client);
 			}
 		} catch (ConnectionPoolException e) {
-			e.printStackTrace();
+			logger.error("ConnectionPool didn't take connection. Message: " + e.getMessage());
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DAOException("SQLException in SQLClientDAO");
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					// logging ERROR
+					logger.error("Statement didn't close. Message: " + e.getMessage());
 				}
 			}
-			// return connection into connection pool
 			try {
 				if (connection != null) {
 					connection.close();
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				logger.error("Connection didn't close. Message: " + e.getMessage());
 			}
 		}
 		return clientList;
@@ -420,24 +413,23 @@ public class SQLClientDAO implements ClientDAO {
 			}
 
 		} catch (ConnectionPoolException e) {
-			e.printStackTrace();
+			logger.error("ConnectionPool didn't take connection. Message: " + e.getMessage());
 		} catch (SQLException e) {
-			throw new DAOException("Error!");
+			throw new DAOException("SQLException in SQLClientDAO");
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					// logging ERROR
+					logger.error("Statement didn't close. Message: " + e.getMessage());
 				}
 			}
-			// return connection into connection pool
 			try {
 				if (connection != null) {
 					connection.close();
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				logger.error("Connection didn't close. Message: " + e.getMessage());
 			}
 		}
 		return address;

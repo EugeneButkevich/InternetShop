@@ -2,6 +2,8 @@ package by.htp.internetshop.service.impl;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
+
 import by.htp.internetshop.controller.RequestParameterName;
 import by.htp.internetshop.dao.DAOException;
 import by.htp.internetshop.dao.DAOFactory;
@@ -10,6 +12,8 @@ import by.htp.internetshop.dao.ProductDAO;
 import by.htp.internetshop.service.IService;
 
 public class CancelOrderService implements IService {
+
+	private static final Logger logger = Logger.getLogger(CancelOrderService.class);
 
 	private static final CancelOrderService instance = new CancelOrderService();
 
@@ -36,11 +40,10 @@ public class CancelOrderService implements IService {
 		productDAO = DAOFactory.getInstance().getProductDAO();
 		try {
 			orderDAO.cancelOrder(idOrder);
-			productDAO.updateQuantityOfProductsInStock(idProduct,
-					quantityOfProductsInStock + quantityOfProductsInOrder);
+			productDAO.updateQuantityOfProductsInStock(idProduct, quantityOfProductsInStock + quantityOfProductsInOrder);
 			result = true;
 		} catch (DAOException e) {
-			e.printStackTrace();
+			logger.error("ProductDAO didn't cancel order or ProductDAO didn't update quantity of products in the stock. Message: "+ e.getMessage());
 		}
 		return result;
 	}

@@ -2,6 +2,8 @@ package by.htp.internetshop.service.impl;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
+
 import by.htp.internetshop.controller.RequestParameterName;
 import by.htp.internetshop.dao.ClientDAO;
 import by.htp.internetshop.dao.DAOException;
@@ -9,6 +11,8 @@ import by.htp.internetshop.dao.DAOFactory;
 import by.htp.internetshop.service.IService;
 
 public class RemoveFromBlacklistService implements IService {
+
+	private static final Logger logger = Logger.getLogger(RemoveFromBlacklistService.class);
 
 	private static final RemoveFromBlacklistService instance = new RemoveFromBlacklistService();
 
@@ -30,9 +34,8 @@ public class RemoveFromBlacklistService implements IService {
 			clientdDAO.removeFromBlacklist(id_client);
 			result = true;
 		} catch (DAOException e) {
-			e.printStackTrace();
+			logger.error("ClientDAO didn't remove client from blacklist. Message: " + e.getMessage());
 		}
-
 		return result;
 	}
 }

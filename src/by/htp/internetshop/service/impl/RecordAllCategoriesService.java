@@ -5,6 +5,8 @@ import java.util.List;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
+
 import by.htp.internetshop.controller.RequestParameterName;
 import by.htp.internetshop.dao.DAOException;
 import by.htp.internetshop.dao.DAOFactory;
@@ -13,6 +15,8 @@ import by.htp.internetshop.domain.ProductCategory;
 import by.htp.internetshop.service.IService;
 
 public class RecordAllCategoriesService implements IService {
+
+	private static final Logger logger = Logger.getLogger(RecordAllCategoriesService.class);
 
 	private static final RecordAllCategoriesService instance = new RecordAllCategoriesService();
 
@@ -30,7 +34,7 @@ public class RecordAllCategoriesService implements IService {
 			categoryList = productDAO.getAllCategories();
 			result = true;
 		} catch (DAOException e) {
-			e.printStackTrace();
+			logger.error("ProductDAO didn't return all categories. Message: " + e.getMessage());
 		}
 
 		ServletContext application = request.getServletContext();

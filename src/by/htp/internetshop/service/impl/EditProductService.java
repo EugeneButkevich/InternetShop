@@ -2,6 +2,8 @@ package by.htp.internetshop.service.impl;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
+
 import by.htp.internetshop.controller.RequestParameterName;
 import by.htp.internetshop.dao.DAOException;
 import by.htp.internetshop.dao.DAOFactory;
@@ -10,6 +12,8 @@ import by.htp.internetshop.domain.Product;
 import by.htp.internetshop.service.IService;
 
 public class EditProductService implements IService {
+
+	private static final Logger logger = Logger.getLogger(EditProductService.class);
 
 	private static final EditProductService instance = new EditProductService();
 
@@ -36,6 +40,7 @@ public class EditProductService implements IService {
 
 		nameProduct = request.getParameter(RequestParameterName.NAME_PRODUCT);
 		if (nameProduct.equals("")) {
+			logger.warn("Name of product didn't enter");
 			request.getSession(true).setAttribute(RequestParameterName.ERROR_ADD_OR_EDIT_PRODUCT, 1);
 			return false;
 		}
@@ -43,16 +48,19 @@ public class EditProductService implements IService {
 
 		costOfProduct = request.getParameter(RequestParameterName.COST_PRODUCT);
 		if (costOfProduct.equals("")) {
+			logger.warn("Cost of product didn't enter");
 			request.getSession(true).setAttribute(RequestParameterName.ERROR_ADD_OR_EDIT_PRODUCT, 2);
 			return false;
 		}
 		try {
 			if (Integer.parseInt(costOfProduct) < 0) {
+				logger.warn("In field of cost of product have entered negative number");
 				request.getSession(true).setAttribute(RequestParameterName.ERROR_ADD_OR_EDIT_PRODUCT, 3);
 				return false;
 			}
 			product.setPrice(Integer.parseInt(costOfProduct));
 		} catch (Exception e) {
+			logger.warn("In field of cost of product have entered letters");
 			request.getSession(true).setAttribute(RequestParameterName.ERROR_ADD_OR_EDIT_PRODUCT, 5);
 			return false;
 		}
@@ -63,11 +71,13 @@ public class EditProductService implements IService {
 		} else {
 			try {
 				if (Integer.parseInt(quantityOfProduct) < 0) {
+					logger.warn("In field of number of products have entered negative number");
 					request.getSession(true).setAttribute(RequestParameterName.ERROR_ADD_OR_EDIT_PRODUCT, 4);
 					return false;
 				}
 				product.setQuantityInStock(Integer.parseInt(quantityOfProduct));
 			} catch (Exception e) {
+				logger.warn("In field of number of products have entered letters");
 				request.getSession(true).setAttribute(RequestParameterName.ERROR_ADD_OR_EDIT_PRODUCT, 6);
 				return false;
 			}
@@ -78,7 +88,7 @@ public class EditProductService implements IService {
 			try {
 				productDAO.editProduct(product);
 			} catch (DAOException e) {
-				e.printStackTrace();
+				logger.error("ProductDAO didn't edit product. Message: " + e.getMessage());
 			}
 		}
 		return result;

@@ -12,5 +12,4 @@ public class NoSuchCommand implements ICommand {
 	public String execute(HttpServletRequest request) throws CommandException {
 		return JspPageName.ERROR_PAGE;
 	}
-
 }

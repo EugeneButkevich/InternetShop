@@ -2,6 +2,8 @@ package by.htp.internetshop.service.impl;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
+
 import by.htp.internetshop.controller.RequestParameterName;
 import by.htp.internetshop.dao.DAOException;
 import by.htp.internetshop.dao.DAOFactory;
@@ -10,6 +12,8 @@ import by.htp.internetshop.domain.Product;
 import by.htp.internetshop.service.IService;
 
 public class GoEditProductService implements IService {
+
+	private static final Logger logger = Logger.getLogger(GoEditProductService.class);
 
 	private static final GoEditProductService instance = new GoEditProductService();
 
@@ -29,7 +33,7 @@ public class GoEditProductService implements IService {
 		try {
 			product = productDAO.getProduct(idProduct);
 		} catch (DAOException e) {
-			e.printStackTrace();
+			logger.error("ProductDAO didn't return a product. Message: " + e.getMessage());
 		}
 
 		if (product != null) {

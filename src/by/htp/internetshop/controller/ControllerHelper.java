@@ -32,7 +32,6 @@ public final class ControllerHelper {
 	private Map<CommandName, ICommand> commands = new HashMap<>();
 
 	public ControllerHelper() {
-		System.out.println("Начало инициализации controllerHelper");
 		commands.put(CommandName.AUTHORIZATION, new AuthorizationCommand());
 		commands.put(CommandName.REGISTRATION, new RegistrationCommand());
 		commands.put(CommandName.ADD_NEW_CATEGORY_PRODUCT, new AddNewCategoryProductCommand());
@@ -53,7 +52,6 @@ public final class ControllerHelper {
 		commands.put(CommandName.SHOW_ORDERS, new ShowOrdersOfOneClientCommand());
 		commands.put(CommandName.GO_TO_ADMIN_PAGE, new GoToAdminPageCommand());
 		commands.put(CommandName.NO_SUCH_COMMAND, new NoSuchCommand());
-		System.out.println("Инициализировали controllerHelper");
 	}
 
 	public static ControllerHelper getInstance() {
@@ -61,9 +59,7 @@ public final class ControllerHelper {
 	}
 
 	public ICommand getCommand(String commandName) {
-		System.out.println("до расчета name");
 		CommandName name = CommandName.valueOf(commandName.toUpperCase());
-		System.out.println("name="+name);
 		ICommand command;
 		if (name != null) {
 			command = commands.get(name);

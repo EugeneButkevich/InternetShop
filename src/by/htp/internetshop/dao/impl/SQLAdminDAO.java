@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.apache.log4j.Logger;
+
 import by.htp.internetshop.dao.AdminDAO;
 import by.htp.internetshop.dao.DAOException;
 import by.htp.internetshop.dao.impl.connectionpool.ConnectionPool;
@@ -15,6 +17,8 @@ public class SQLAdminDAO implements AdminDAO {
 
 	private static final String LOGIN_PASSWORD_CHECK_SQL = "SELECT id_administrator FROM Administrator WHERE login=? AND password=?";
 	private static final String GET_ADMIN_DATA_SQL = "SELECT * FROM administrator WHERE login=? AND password=?";
+
+	private static final Logger logger = Logger.getLogger(SQLAdminDAO.class);
 
 	private final static SQLAdminDAO instance = new SQLAdminDAO();
 
@@ -33,28 +37,26 @@ public class SQLAdminDAO implements AdminDAO {
 			statement.setString(1, login);
 			statement.setString(2, password);
 			resultSet = statement.executeQuery();
-
 			return resultSet.next();
 
 		} catch (SQLException e) {
-			throw new DAOException("Error!");
+			throw new DAOException("SQLException in SQLAdminDAO");
 		} catch (ConnectionPoolException e) {
-			e.printStackTrace();
+			logger.error("ConnectionPool didn't take connection. Message: " + e.getMessage());
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					// logging ERROR
+					logger.error("Statement didn't close. Message: " + e.getMessage());
 				}
 			}
-			// return connection into connection pool
 			try {
 				if (connection != null) {
 					connection.close();
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				logger.error("Connection didn't close. Message: " + e.getMessage());
 			}
 		}
 		return false;
@@ -78,30 +80,26 @@ public class SQLAdminDAO implements AdminDAO {
 				admin.setId(resultSet.getInt(1));
 				admin.setLogin(resultSet.getString(2));
 				admin.setPassword(resultSet.getString(3));
-				System.out.println("id=" + admin.getId());
-				System.out.println("login=" + admin.getLogin());
-				System.out.println("password=" + admin.getPassword());
 			}
 
 		} catch (SQLException e) {
-			throw new DAOException("Error!");
+			throw new DAOException("SQLException in SQLAdminDAO");
 		} catch (ConnectionPoolException e) {
-			e.printStackTrace();
+			logger.error("ConnectionPool didn't take connection. Message: " + e.getMessage());
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					// logging ERROR
+					logger.error("Statement didn't close. Message: " + e.getMessage());
 				}
 			}
-			// return connection into connection pool
 			try {
 				if (connection != null) {
 					connection.close();
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				logger.error("Connection didn't close. Message: " + e.getMessage());
 			}
 		}
 		return admin;

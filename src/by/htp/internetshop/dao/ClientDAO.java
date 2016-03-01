@@ -8,7 +8,7 @@ import by.htp.internetshop.domain.Client;
 public interface ClientDAO {
 
 	boolean checkClient(String login, String password) throws DAOException;
-	boolean thereIsClientInBlacklist (String login, String password) throws DAOException;
+	boolean thereIsClientOnBlacklist (String login, String password) throws DAOException;
 	Client getClient(String login, String password) throws DAOException;
 	boolean checkUniquenessOfLogin(String login) throws DAOException;
 	void registration(String login, String password, String surname, String name, Date registrationDate,

@@ -17,6 +17,7 @@ public class InitConnections implements ServletContextListener {
 
 	@Override
 	public void contextInitialized(ServletContextEvent contextEvent) {
+
 		List<ProductCategory> categoryList = null;
 		ConnectionPool connectionPool = ConnectionPool.getInstance();
 		try {
@@ -24,6 +25,7 @@ public class InitConnections implements ServletContextListener {
 		} catch (ConnectionPoolException e) {
 			e.printStackTrace();
 		}
+
 		ProductDAO productDAO = DAOFactory.getInstance().getProductDAO();
 		try {
 			categoryList = productDAO.getAllCategories();
@@ -32,6 +34,11 @@ public class InitConnections implements ServletContextListener {
 		}
 		ServletContext application = contextEvent.getServletContext();
 		application.setAttribute("allCategories", categoryList);
+
+/*		String homeDir = contextEvent.getServletContext().getRealPath("/");
+		File propertiesFile = new File(homeDir, "WEB-INF/classes/log4j.properties");
+		PropertyConfigurator.configure(propertiesFile.toString());*/
+
 	}
 
 	@Override

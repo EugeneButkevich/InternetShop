@@ -10,15 +10,19 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
+import org.apache.log4j.Logger;
+
 public class CurrentFilter implements Filter {
 
 	private ServletContext context;
 
+	private static final Logger logger = Logger.getLogger(CurrentFilter.class);
+
 	@Override
 	public void init(FilterConfig fConfig) throws ServletException {
 		this.context = fConfig.getServletContext();
-		this.context.log("MyFilter initialized");
-		System.out.println("Фильтр инициализировали");
+		this.context.log("Filter initialized");
+		logger.info("Filter initialized");
 	}
 
 	@Override
@@ -35,5 +39,6 @@ public class CurrentFilter implements Filter {
 
 	@Override
 	public void destroy() {
+		logger.info("Filter destroyed");
 	}
 }

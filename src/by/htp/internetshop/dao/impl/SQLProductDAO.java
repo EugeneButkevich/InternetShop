@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+
 import by.htp.internetshop.dao.DAOException;
 import by.htp.internetshop.dao.ProductDAO;
 import by.htp.internetshop.dao.impl.connectionpool.ConnectionPool;
@@ -28,6 +30,8 @@ public class SQLProductDAO implements ProductDAO {
 	private static final String REMOVE_PRODUCT_SQL = "DELETE FROM product WHERE id_product=?";
 	private static final String UPDATE_QUANTITY_OF_PRODUCTS_IN_STOCK_SQL = "UPDATE product SET quantityInStock=? WHERE id_product=?";
 	private static final String GET_PRODUCT_OF_ORDER_SQL = "SELECT * FROM product WHERE id_product IN (SELECT id_product FROM order_has_product WHERE id_order=?)";
+
+	private static final Logger logger = Logger.getLogger(SQLProductDAO.class);
 
 	private static final SQLProductDAO instance = new SQLProductDAO();
 
@@ -54,24 +58,23 @@ public class SQLProductDAO implements ProductDAO {
 				categoryList.add(category);
 			}
 		} catch (ConnectionPoolException e) {
-			e.printStackTrace();
+			logger.error("ConnectionPool didn't take connection. Message: " + e.getMessage());
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DAOException("SQLException in SQLProductDAO");
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					// logging ERROR
+					logger.error("Statement didn't close. Message: " + e.getMessage());
 				}
 			}
-			// return connection into connection pool
 			try {
 				if (connection != null) {
 					connection.close();
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				logger.error("Connection didn't close. Message: " + e.getMessage());
 			}
 		}
 		return categoryList;
@@ -100,24 +103,23 @@ public class SQLProductDAO implements ProductDAO {
 				productList.add(product);
 			}
 		} catch (ConnectionPoolException e) {
-			e.printStackTrace();
+			logger.error("ConnectionPool didn't take connection. Message: " + e.getMessage());
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DAOException("SQLException in SQLProductDAO");
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					// logging ERROR
+					logger.error("Statement didn't close. Message: " + e.getMessage());
 				}
 			}
-			// return connection into connection pool
 			try {
 				if (connection != null) {
 					connection.close();
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				logger.error("Connection didn't close. Message: " + e.getMessage());
 			}
 		}
 		return productList;
@@ -144,24 +146,23 @@ public class SQLProductDAO implements ProductDAO {
 				product.setQuantityInStock(resultSet.getInt(5));
 			}
 		} catch (ConnectionPoolException e) {
-			e.printStackTrace();
+			logger.error("ConnectionPool didn't take connection. Message: " + e.getMessage());
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DAOException("SQLException in SQLProductDAO");
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					// logging ERROR
+					logger.error("Statement didn't close. Message: " + e.getMessage());
 				}
 			}
-			// return connection into connection pool
 			try {
 				if (connection != null) {
 					connection.close();
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				logger.error("Connection didn't close. Message: " + e.getMessage());
 			}
 		}
 		return product;
@@ -177,24 +178,23 @@ public class SQLProductDAO implements ProductDAO {
 			statement.setString(1, nameCategory);
 			statement.executeUpdate();
 		} catch (ConnectionPoolException e) {
-			e.printStackTrace();
+			logger.error("ConnectionPool didn't take connection. Message: " + e.getMessage());
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DAOException("SQLException in SQLProductDAO");
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					// logging ERROR
+					logger.error("Statement didn't close. Message: " + e.getMessage());
 				}
 			}
-			// return connection into connection pool
 			try {
 				if (connection != null) {
 					connection.close();
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				logger.error("Connection didn't close. Message: " + e.getMessage());
 			}
 		}
 	}
@@ -216,24 +216,23 @@ public class SQLProductDAO implements ProductDAO {
 			System.out.println("quantity=" + product.getQuantityInStock());
 			statement.executeUpdate();
 		} catch (ConnectionPoolException e) {
-			e.printStackTrace();
+			logger.error("ConnectionPool didn't take connection. Message: " + e.getMessage());
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DAOException("SQLException in SQLProductDAO");
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					// logging ERROR
+					logger.error("Statement didn't close. Message: " + e.getMessage());
 				}
 			}
-			// return connection into connection pool
 			try {
 				if (connection != null) {
 					connection.close();
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				logger.error("Connection didn't close. Message: " + e.getMessage());
 			}
 		}
 	}
@@ -251,24 +250,23 @@ public class SQLProductDAO implements ProductDAO {
 			statement.setInt(4, product.getId());
 			statement.executeUpdate();
 		} catch (ConnectionPoolException e) {
-			e.printStackTrace();
+			logger.error("ConnectionPool didn't take connection. Message: " + e.getMessage());
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DAOException("SQLException in SQLProductDAO");
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					// logging ERROR
+					logger.error("Statement didn't close. Message: " + e.getMessage());
 				}
 			}
-			// return connection into connection pool
 			try {
 				if (connection != null) {
 					connection.close();
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				logger.error("Connection didn't close. Message: " + e.getMessage());
 			}
 		}
 	}
@@ -283,24 +281,23 @@ public class SQLProductDAO implements ProductDAO {
 			statement.setInt(1, idProduct);
 			statement.executeUpdate();
 		} catch (ConnectionPoolException e) {
-			e.printStackTrace();
+			logger.error("ConnectionPool didn't take connection. Message: " + e.getMessage());
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DAOException("SQLException in SQLProductDAO");
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					// logging ERROR
+					logger.error("Statement didn't close. Message: " + e.getMessage());
 				}
 			}
-			// return connection into connection pool
 			try {
 				if (connection != null) {
 					connection.close();
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				logger.error("Connection didn't close. Message: " + e.getMessage());
 			}
 		}
 	}
@@ -316,28 +313,26 @@ public class SQLProductDAO implements ProductDAO {
 			statement.setInt(2, idProduct);
 			statement.executeUpdate();
 		} catch (ConnectionPoolException e) {
-			e.printStackTrace();
+			logger.error("ConnectionPool didn't take connection. Message: " + e.getMessage());
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DAOException("SQLException in SQLProductDAO");
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					// logging ERROR
+					logger.error("Statement didn't close. Message: " + e.getMessage());
 				}
 			}
-			// return connection into connection pool
 			try {
 				if (connection != null) {
 					connection.close();
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				logger.error("Connection didn't close. Message: " + e.getMessage());
 			}
 		}
 	}
-
 
 	@Override
 	public Map<Integer, List<Object>> getDataOfAllOrdersOfOneClient(List<Order> orderList) throws DAOException {
@@ -365,21 +360,21 @@ public class SQLProductDAO implements ProductDAO {
 					product.setQuantityInStock(resultSet.getInt(5));
 					dataOfOrdersOfOneClient.add(product);
 					dataOfOrdersOfOneClient.add(order.getAmount());
-					quantityOfProductsInOrder = order.getAmount()/product.getPrice();
+					quantityOfProductsInOrder = order.getAmount() / product.getPrice();
 					dataOfOrdersOfOneClient.add(quantityOfProductsInOrder);
 					allOrdersOfOneClient.put(order.getIdOrder(), dataOfOrdersOfOneClient);
 				}
 			}
 		} catch (ConnectionPoolException e) {
-			e.printStackTrace();
+			logger.error("ConnectionPool didn't take connection. Message: " + e.getMessage());
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DAOException("SQLException in SQLProductDAO");
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					// logging ERROR
+					logger.error("Statement didn't close. Message: " + e.getMessage());
 				}
 			}
 			try {
@@ -387,7 +382,7 @@ public class SQLProductDAO implements ProductDAO {
 					connection.close();
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				logger.error("Connection didn't close. Message: " + e.getMessage());
 			}
 		}
 		return allOrdersOfOneClient;

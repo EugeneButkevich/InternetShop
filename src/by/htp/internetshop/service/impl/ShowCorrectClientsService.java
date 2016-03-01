@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
+
 import by.htp.internetshop.controller.RequestParameterName;
 import by.htp.internetshop.dao.ClientDAO;
 import by.htp.internetshop.dao.DAOException;
@@ -12,6 +14,8 @@ import by.htp.internetshop.domain.Client;
 import by.htp.internetshop.service.IService;
 
 public class ShowCorrectClientsService implements IService {
+
+	private static final Logger logger = Logger.getLogger(ShowCorrectClientsService.class);
 
 	private static final ShowCorrectClientsService instance = new ShowCorrectClientsService();
 
@@ -32,7 +36,7 @@ public class ShowCorrectClientsService implements IService {
 		try {
 			clientList = clientDAO.getClientsThatAreNotIncludedInBlacklist();
 		} catch (DAOException e) {
-			e.printStackTrace();
+			logger.error("ClientDAO didn't return clients which aren't included in the blacklist. Message: " + e.getMessage());
 		}
 
 		if (!clientList.isEmpty()) {

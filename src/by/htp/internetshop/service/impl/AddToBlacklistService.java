@@ -2,6 +2,8 @@ package by.htp.internetshop.service.impl;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
+
 import by.htp.internetshop.controller.RequestParameterName;
 import by.htp.internetshop.dao.ClientDAO;
 import by.htp.internetshop.dao.DAOException;
@@ -9,6 +11,8 @@ import by.htp.internetshop.dao.DAOFactory;
 import by.htp.internetshop.service.IService;
 
 public class AddToBlacklistService implements IService {
+
+	private static final Logger logger = Logger.getLogger(AddToBlacklistService.class);
 
 	private static final AddToBlacklistService instance = new AddToBlacklistService();
 
@@ -23,14 +27,14 @@ public class AddToBlacklistService implements IService {
 		boolean result = false;
 		ClientDAO clientDAO;
 
-		idClient=Integer.parseInt(request.getParameter(RequestParameterName.ID_CLIENT));
+		idClient = Integer.parseInt(request.getParameter(RequestParameterName.ID_CLIENT));
 		clientDAO = DAOFactory.getInstance().getClientDAO();
-		
+
 		try {
 			clientDAO.addToBlacklict(idClient);
 			result = true;
 		} catch (DAOException e) {
-			e.printStackTrace();
+			logger.error("ClientDAO didn't client to blacklist. Message: " + e.getMessage());
 		}
 		return result;
 	}

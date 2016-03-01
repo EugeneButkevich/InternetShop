@@ -2,6 +2,8 @@ package by.htp.internetshop.service.impl;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
+
 import by.htp.internetshop.controller.RequestParameterName;
 import by.htp.internetshop.dao.ClientDAO;
 import by.htp.internetshop.dao.DAOException;
@@ -13,6 +15,8 @@ import by.htp.internetshop.domain.Product;
 import by.htp.internetshop.service.IService;
 
 public class OrderService implements IService {
+
+	private static final Logger logger = Logger.getLogger(OrderService.class);
 
 	private static final OrderService instance = new OrderService();
 
@@ -35,17 +39,20 @@ public class OrderService implements IService {
 		idProduct = Integer.parseInt(request.getParameter(RequestParameterName.ID_PRODUCT));
 		numberOfInstances = request.getParameter(RequestParameterName.NUMBER_OF_INSTANCES);
 
-		if (numberOfInstances == "" || numberOfInstances.equals("0")) {
+		if (numberOfInstances.equals("") || numberOfInstances.equals("0")) {
+			logger.warn("Client didn't enter the number of products for order");
 			request.setAttribute(RequestParameterName.ERROR_ORDER, 1);
 			return false;
 		}
 
 		try {
 			if (Integer.parseInt(numberOfInstances) < 0) {
+				logger.warn("In field of number of products for order have entered negative number");
 				request.setAttribute(RequestParameterName.ERROR_ORDER, 2);
 				return false;
 			}
 		} catch (Exception e) {
+			logger.warn("In field of number of products for order have entered letters or fractional number");
 			request.setAttribute(RequestParameterName.ERROR_ORDER, 3);
 			return false;
 		}
@@ -59,6 +66,7 @@ public class OrderService implements IService {
 				client.setAddress(clientDAO.getAddressOfClient(client.getId()));
 				product = productDAO.getProduct(idProduct);
 				if (Integer.parseInt(numberOfInstances) > product.getQuantityInStock()) {
+					logger.warn("Client entered number of products for order more than are in stock");
 					request.setAttribute(RequestParameterName.ERROR_ORDER, 4);
 					return false;
 				}
@@ -66,7 +74,7 @@ public class OrderService implements IService {
 				productDAO.updateQuantityOfProductsInStock(product.getId(), product.getQuantityInStock() - Integer.parseInt(numberOfInstances));
 				result = true;
 			} catch (DAOException e) {
-				e.printStackTrace();
+				logger.error("ProductDAO didn't add order or ProductDAO didn't update quantity of products in the stock. Message: "+ e.getMessage());
 			}
 		}
 		return result;

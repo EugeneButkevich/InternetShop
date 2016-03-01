@@ -5,6 +5,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
+
 import by.htp.internetshop.controller.RequestParameterName;
 import by.htp.internetshop.dao.DAOException;
 import by.htp.internetshop.dao.DAOFactory;
@@ -15,6 +17,8 @@ import by.htp.internetshop.domain.Order;
 import by.htp.internetshop.service.IService;
 
 public class ShowOrdersOfOneClientService implements IService {
+
+	private static final Logger logger = Logger.getLogger(ShowOrdersOfOneClientService.class);
 
 	private final static ShowOrdersOfOneClientService instance = new ShowOrdersOfOneClientService();
 
@@ -37,11 +41,11 @@ public class ShowOrdersOfOneClientService implements IService {
 		idClientInSession = ((Client) request.getSession().getAttribute(RequestParameterName.CLIENT)).getId();
 		System.out.println("1)" + idClient);
 		System.out.println("2)" + idClientInSession);
-		
+
 		if (idClient != idClientInSession) {
 			return false;
 		}
-		
+
 		orderDAO = DAOFactory.getInstance().getOrderDAO();
 		productDAO = DAOFactory.getInstance().getProductDAO();
 		try {
@@ -50,7 +54,9 @@ public class ShowOrdersOfOneClientService implements IService {
 			request.setAttribute(RequestParameterName.ALL_ORDERS_OF_ONE_CLIENT, dataOfOrdersOfOneClient);
 			result = true;
 		} catch (DAOException e) {
-			e.printStackTrace();
+			logger.error(
+					"OrderDAO didn't return all orders of one client or ProductDAO didn't return data of orders of one client. Message: "
+							+ e.getMessage());
 		}
 		return result;
 	}
